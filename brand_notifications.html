@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Уведомления</title>
+  <link rel="icon" type="image/png" href="assets/Group 2087325579.png">
+      <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/tooltips.css">
+  <style>
+    .logo-container {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+      margin-left: 10%;
+    }
+
+    .logo-spacer {
+      flex: 1;
+    }
+
+    .center-spacer {
+      flex: 1;
+    }
+
+    .custom-balance-container {
+      background: none;
+      border-radius: 0;
+      padding: 0;
+      margin-bottom: 16px;
+      width: 280px;
+      max-width: 280px;
+      box-shadow: none;
+      box-sizing: border-box;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .custom-balance-title {
+      font-size: 14px;
+      color: #fff;
+      text-align: left;
+      margin: 0 0 8px 0;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .custom-balance-card {
+      background: #fff;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .custom-balance-amount {
+      font-size: 18px;
+      font-weight: 700;
+      color: #23252b;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      border-radius: 0;
+      text-align: center;
+    }
+
+    .custom-balance-button {
+      background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 0;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease;
+      margin-top: 8px;
+      box-shadow: 0 2px 8px rgba(255, 140, 140, 0.3);
+    }
+
+    .custom-balance-button:hover {
+      background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 140, 140, 0.4);
+    }
+
+    .brand-logo-container {
+      pointer-events: none !important;
+      display: flex !important;
+      justify-content: flex-start !important;
+      padding-right: 30% !important;
+    }
+
+    .brand-logo-img {
+      width: 180px !important;
+      height: 180px !important;
+      object-fit: contain !important;
+      transition: all 0.3s ease !important;
+      cursor: pointer !important;
+      display: block !important;
+      pointer-events: auto !important;
+    }
+
+    .brand-logo-img:hover {
+      transform: scale(1.05);
+    }
+
+    .sidebar-buttons button {
+      width: 280px !important;
+      max-width: 280px !important;
+      background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%) !important;
+      color: #fff !important;
+      border: none !important;
+      border-radius: 16px !important;
+      font-size: 20px !important;
+      font-weight: 600 !important;
+      padding: 14px 0 !important;
+      cursor: pointer !important;
+      margin: 0 auto 8px auto !important;
+      transition: all 0.3s ease !important;
+      box-shadow: 0 4px 12px rgba(255, 140, 140, 0.3) !important;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+      position: relative !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+    }
+
+    .sidebar-buttons button:hover {
+      background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%) !important;
+      box-shadow: 0 6px 16px rgba(255, 140, 140, 0.4) !important;
+      transform: translateY(-2px) scale(1.05) !important;
+    }
+
+    .sidebar-buttons button.active {
+      background: linear-gradient(135deg, #6ca0ff 0%, #5a8fd8 100%) !important;
+      box-shadow: 0 4px 12px rgba(108, 160, 255, 0.4) !important;
+    }
+
+    .sidebar-buttons button.active:hover {
+      background: linear-gradient(135deg, #5a8fd8 0%, #6ca0ff 100%) !important;
+      box-shadow: 0 6px 16px rgba(108, 160, 255, 0.5) !important;
+    }
+
+    .sidebar-market {
+      margin-top: auto !important;
+      padding-top: 20px !important;
+      margin-bottom: 40px !important;
+    }
+
+    .sidebar-market button {
+      width: 280px !important;
+      max-width: 280px !important;
+      background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%) !important;
+      color: #fff !important;
+      border: none !important;
+      border-radius: 12px !important;
+      padding: 16px 20px !important;
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+      box-shadow: 0 4px 12px rgba(255, 140, 140, 0.3) !important;
+      text-align: center !important;
+      position: relative !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+      margin: 0 auto !important;
+    }
+
+    .sidebar-market button:hover {
+      background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%) !important;
+      box-shadow: 0 6px 16px rgba(255, 140, 140, 0.4) !important;
+      transform: translateY(-2px) scale(1.05) !important;
+    }
+
+    .sidebar-market button.active {
+      background: linear-gradient(135deg, #6ca0ff 0%, #5a8fd8 100%) !important;
+      box-shadow: 0 4px 12px rgba(108, 160, 255, 0.4) !important;
+    }
+
+    .sidebar-market button.active:hover {
+      background: linear-gradient(135deg, #5a8fd8 0%, #6ca0ff 100%) !important;
+      box-shadow: 0 6px 16px rgba(108, 160, 255, 0.5) !important;
+    }
+
+    .alert-text {
+      color: #23252b;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .app {
+        flex-direction: column !important;
+      }
+
+      .sidebar {
+        position: relative !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        padding: 16px !important;
+        gap: 16px !important;
+      }
+
+      .sidebar-header {
+        flex-direction: row !important;
+        width: 100% !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        margin-bottom: 0 !important;
+      }
+
+      .logo-container {
+        margin-left: 0 !important;
+        width: auto !important;
+      }
+
+      .company-logo {
+        width: 60px !important;
+        height: 60px !important;
+        margin: 0 !important;
+      }
+
+      .brand-logo-container {
+        pointer-events: auto !important;
+        justify-content: center !important;
+        padding-right: 0 !important;
+        flex: 1 !important;
+        display: flex !important;
+        justify-content: center !important;
+      }
+
+      .brand-logo-img {
+        width: 120px !important;
+        height: 120px !important;
+      }
+
+      .custom-balance-container {
+        width: auto !important;
+        max-width: none !important;
+        margin: 0 !important;
+      }
+
+      .custom-balance-card {
+        padding: 8px 12px !important;
+      }
+
+      .custom-balance-amount {
+        font-size: 16px !important;
+      }
+
+      .custom-balance-button {
+        font-size: 12px !important;
+        padding: 8px 0 !important;
+      }
+
+      .sidebar-buttons {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        justify-content: center !important;
+        margin: 0 !important;
+      }
+
+      .sidebar-buttons button {
+        width: auto !important;
+        max-width: none !important;
+        flex: 1 !important;
+        min-width: 120px !important;
+        font-size: 14px !important;
+        padding: 10px 8px !important;
+        margin: 0 !important;
+      }
+
+      .sidebar-market {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: auto !important;
+        flex: 1 !important;
+        min-width: 120px !important;
+      }
+
+      .sidebar-market button {
+        width: 100% !important;
+        max-width: none !important;
+        font-size: 14px !important;
+        padding: 10px 8px !important;
+        margin: 0 !important;
+      }
+
+      .main {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 16px !important;
+        background: #23252b !important;
+        border-radius: 0 !important;
+        margin-top: 0 !important;
+      }
+
+      .main-header {
+        background: linear-gradient(135deg, #2a2d35 0%, #23252b 100%) !important;
+        border-radius: 16px !important;
+        padding: 20px !important;
+        margin-bottom: 20px !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+        border: 1px solid rgba(255, 140, 140, 0.2) !important;
+        text-align: center !important;
+      }
+
+      .main-header h1 {
+        font-size: 24px !important;
+        color: #fff !important;
+        margin: 0 0 16px 0 !important;
+        text-align: center !important;
+        font-weight: 700 !important;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+      }
+
+      .notifications-tabs {
+        flex-direction: column !important;
+        gap: 8px !important;
+        margin-bottom: 20px !important;
+      }
+
+      .notifications-tab-btn {
+        width: 100% !important;
+        font-size: 14px !important;
+        padding: 12px 16px !important;
+        border-radius: 12px !important;
+      }
+
+      .notification-card {
+        flex-direction: column !important;
+        padding: 16px !important;
+        border-radius: 12px !important;
+        margin-bottom: 16px !important;
+      }
+
+      .notification-avatar {
+        margin-bottom: 12px !important;
+        justify-content: center !important;
+      }
+
+      .notification-avatar img {
+        width: 60px !important;
+        height: 60px !important;
+      }
+
+      .blogger-name {
+        font-size: 14px !important;
+        margin-top: 8px !important;
+      }
+
+      .notification-content {
+        text-align: center !important;
+        margin-bottom: 12px !important;
+      }
+
+      .notification-title {
+        font-size: 16px !important;
+        margin-bottom: 12px !important;
+      }
+
+      .notification-metrics {
+        flex-direction: column !important;
+        gap: 8px !important;
+        margin-bottom: 12px !important;
+      }
+
+      .metric-item {
+        text-align: center !important;
+      }
+
+      .metric-value {
+        font-size: 14px !important;
+      }
+
+      .metric-label {
+        font-size: 12px !important;
+      }
+
+      .notification-budget {
+        text-align: center !important;
+        margin-bottom: 12px !important;
+      }
+
+      .budget-label {
+        font-size: 12px !important;
+      }
+
+      .budget-value {
+        font-size: 14px !important;
+      }
+
+      .notification-social {
+        justify-content: center !important;
+        gap: 8px !important;
+      }
+
+      .social-platform {
+        font-size: 12px !important;
+        padding: 6px 10px !important;
+      }
+
+      .notification-alert {
+        padding: 12px 16px !important;
+        border-radius: 12px !important;
+        margin-bottom: 12px !important;
+      }
+
+      .alert-icon {
+        font-size: 16px !important;
+        margin-right: 8px !important;
+      }
+
+      .alert-text {
+        font-size: 14px !important;
+      }
+
+      .modal {
+        width: 95% !important;
+        max-width: 95% !important;
+        margin: 20px auto !important;
+        border-radius: 20px !important;
+        background: linear-gradient(135deg, #2a2d35 0%, #23252b 100%) !important;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
+        border: 1px solid rgba(255, 140, 140, 0.3) !important;
+      }
+
+      .modal-content {
+        padding: 24px !important;
+        border-radius: 20px !important;
+      }
+
+      .modal-content h2 {
+        font-size: 20px !important;
+        color: #fff !important;
+        text-align: center !important;
+        margin-bottom: 20px !important;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+      }
+
+      .modal-content p {
+        color: #fff !important;
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+        margin-bottom: 16px !important;
+      }
+
+      .modal-content label {
+        color: #fff !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        margin-bottom: 8px !important;
+        display: block !important;
+      }
+
+      .modal-content input[type="text"],
+      .modal-content input[type="number"] {
+        width: 100% !important;
+        padding: 12px !important;
+        border: 1px solid rgba(255, 140, 140, 0.3) !important;
+        border-radius: 8px !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: #fff !important;
+        font-size: 14px !important;
+        margin-bottom: 16px !important;
+      }
+
+      .modal-content input[type="text"]:focus,
+      .modal-content input[type="number"]:focus {
+        outline: none !important;
+        border-color: #ff8c8c !important;
+        box-shadow: 0 0 0 2px rgba(255, 140, 140, 0.2) !important;
+      }
+
+      .modal-content button {
+        background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%) !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 12px 24px !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 12px rgba(255, 140, 140, 0.3) !important;
+        margin: 8px !important;
+        width: 100% !important;
+        max-width: 200px !important;
+      }
+
+      .modal-content button:hover {
+        background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%) !important;
+        box-shadow: 0 6px 16px rgba(255, 140, 140, 0.4) !important;
+        transform: translateY(-2px) !important;
+      }
+
+      .modal-overlay {
+        background: rgba(0, 0, 0, 0.8) !important;
+        backdrop-filter: blur(5px) !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sidebar {
+        padding: 12px !important;
+        gap: 12px !important;
+      }
+
+      .brand-logo-img {
+        width: 100px !important;
+        height: 100px !important;
+      }
+
+      .custom-balance-amount {
+        font-size: 14px !important;
+      }
+
+      .custom-balance-button {
+        font-size: 11px !important;
+        padding: 6px 0 !important;
+      }
+
+      .sidebar-buttons button,
+      .sidebar-market button {
+        font-size: 12px !important;
+        padding: 8px 6px !important;
+        min-width: 100px !important;
+      }
+
+      .notifications-tab-btn {
+        font-size: 12px !important;
+        padding: 10px 12px !important;
+      }
+
+      .notification-card {
+        padding: 12px !important;
+        margin-bottom: 12px !important;
+      }
+
+      .notification-avatar img {
+        width: 50px !important;
+        height: 50px !important;
+      }
+
+      .blogger-name {
+        font-size: 12px !important;
+        margin-top: 6px !important;
+      }
+
+      .notification-title {
+        font-size: 14px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .metric-value {
+        font-size: 12px !important;
+      }
+
+      .metric-label {
+        font-size: 10px !important;
+      }
+
+      .budget-label {
+        font-size: 10px !important;
+      }
+
+      .budget-value {
+        font-size: 12px !important;
+      }
+
+      .social-platform {
+        font-size: 10px !important;
+        padding: 4px 8px !important;
+      }
+
+      .notification-alert {
+        padding: 10px 12px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .alert-icon {
+        font-size: 14px !important;
+        margin-right: 6px !important;
+      }
+
+      .alert-text {
+        font-size: 12px !important;
+      }
+    }
+
+    .notification-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 10000;
+      backdrop-filter: blur(5px);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notification-modal.show {
+      display: flex !important;
+    }
+
+    .notification-modal-content {
+      background: linear-gradient(135deg, #2a2d35 0%, #23252b 100%);
+      border-radius: 24px;
+      padding: 50px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+      border: 2px solid rgba(255, 140, 140, 0.3);
+      position: relative;
+      animation: modalSlideIn 0.4s ease-out;
+      margin: auto;
+      transform: translateZ(0);
+      color: #fff;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-60px) scale(0.85);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .notification-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid rgba(255, 140, 140, 0.3);
+    }
+
+    .notification-modal-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .notification-modal-close {
+      background: rgba(255, 140, 140, 0.2);
+      border: 2px solid rgba(255, 140, 140, 0.3);
+      font-size: 28px;
+      color: #fff;
+      cursor: pointer;
+      padding: 12px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notification-modal-close:hover {
+      background: rgba(255, 140, 140, 0.4);
+      border-color: rgba(255, 140, 140, 0.6);
+      transform: scale(1.1);
+    }
+
+    .notification-modal-body {
+      color: #fff;
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 30px;
+      text-align: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 140, 140, 0.2);
+    }
+
+    .notification-modal-footer {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .notification-modal-btn {
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      min-width: 140px;
+    }
+
+    .notification-modal-btn.primary {
+      background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(255, 140, 140, 0.4);
+    }
+
+    .notification-modal-btn.primary:hover {
+      background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%);
+      box-shadow: 0 8px 25px rgba(255, 140, 140, 0.5);
+      transform: translateY(-3px);
+    }
+
+    .notification-modal-btn.secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 2px solid rgba(255, 140, 140, 0.3);
+    }
+
+    .notification-modal-btn.secondary:hover {
+      background: rgba(255, 140, 140, 0.2);
+      border-color: rgba(255, 140, 140, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .notification-alert {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 16px;
+      border: 2px solid transparent;
+    }
+
+    .notification-alert:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 140, 140, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .notification-modal-content {
+        padding: 30px 20px;
+        max-width: 95%;
+        border-radius: 20px;
+      }
+
+      .notification-modal-title {
+        font-size: 24px;
+      }
+
+      .notification-modal-close {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+      }
+
+      .notification-modal-body {
+        font-size: 16px;
+        padding: 16px;
+      }
+
+      .notification-modal-btn {
+        padding: 12px 24px;
+        font-size: 14px;
+        min-width: 120px;
+      }
+
+      .notification-modal-footer {
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .notification-modal-content {
+        padding: 24px 16px;
+      }
+
+      .notification-modal-title {
+        font-size: 20px;
+      }
+
+      .notification-modal-body {
+        font-size: 14px;
+        padding: 12px;
+      }
+
+      .notification-modal-btn {
+        padding: 10px 20px;
+        font-size: 13px;
+        min-width: 100px;
+      }
+            }
+
+
+    </style>
+</head>
+<body>
+  <div class="container">
+    <div class="app">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-container">
+            <img src="assets/Group 2087325579.png" alt="Логотип компании" class="company-logo" style="width:80px;height:80px;object-fit:contain;margin-bottom:20px;margin-top:20px;" />
+            <div class="logo-spacer"></div>
+          </div>
+          <div class="brand-logo-container">
+            <img src="assets/brend_logo.png" alt="Логотип бренда" class="brand-logo-img" onclick="window.location.href='brand_index.html';">
+          </div>
+          <div class="custom-balance-container">
+            <div class="custom-balance-title">Баланс</div>
+            <div class="custom-balance-card">
+              <div class="custom-balance-amount" id="balanceValue">100,158 р</div>
+              <button class="custom-balance-button" id="topupBtn">Пополнить</button>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-buttons">
+          <button data-action="stats">Статистика</button>
+          <button data-action="partners">Партнеры</button>
+          <button data-action="notifications" class="active">Уведомления</button>
+          <button data-action="contracts">Контракты</button>
+          <button data-action="settings">Настройки</button>
+        </div>
+        <div class="sidebar-market">
+          <button data-action="market">Маркет</button>
+        </div>
+      </aside>
+      <main class="main">
+        <div class="main-header">
+          <h1 class="page-title-with-tooltip">
+            Уведомления
+            <div class="tooltip-icon" id="notificationsTooltip">
+              ?
+              <div class="tooltip-content">Просматривайте важные обновления и сообщения системы</div>
+            </div>
+          </h1>
+        </div>
+        <div class="notifications-content">
+          <div class="notifications-tabs">
+            <button class="notifications-tab-btn active" data-tab="latest">Последние</button>
+            <button class="notifications-tab-btn" data-tab="offers">Предложения</button>
+            <button class="notifications-tab-btn" data-tab="important">Важное</button>
+            <button class="notifications-tab-btn" data-tab="updates">Обновления</button>
+            <button class="notifications-tab-btn" data-tab="deleted">Удалённые</button>
+          </div>
+          
+          <div class="notifications-list">
+            <div class="notification-card blogger-notification" data-type="blogger" onclick="openBloggerModal()">
+              <div class="notification-avatar">
+                <img src="assets/rogov.png" alt="Рогов" />
+                <span class="blogger-name">Рогов</span>
+              </div>
+              <div class="notification-content">
+                <div class="notification-title">Новая прямая интеграция!</div>
+                <div class="notification-metrics">
+                  <div class="metric-item">
+                    <span class="metric-value">999 999</span>
+                    <span class="metric-label">кликов на 1 интеграцию</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-value">999 999</span>
+                    <span class="metric-label">переходов на 1 интеграцию</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-value">999 999</span>
+                    <span class="metric-label">покупок на 1 интеграцию</span>
+                  </div>
+                </div>
+                <div class="notification-budget">
+                  <span class="budget-label">Средний бюджет:</span>
+                  <span class="budget-value">999 000р.</span>
+                </div>
+              </div>
+              <div class="notification-social">
+                <div class="social-platform">VK</div>
+                <div class="social-platform">YouTube</div>
+                <div class="social-platform">Telegram</div>
+              </div>
+            </div>
+            
+            <div class="notification-alert alert-warning" onclick="openNotificationModal('Осталось менее 30% бюджета!')">
+              <span class="alert-icon">!</span>
+              <span class="alert-text">Осталось менее 30% бюджета!</span>
+            </div>
+            
+            <div class="notification-alert alert-update" onclick="openNotificationModal('Обновление 7.878.98')">
+              <span class="alert-icon">📱</span>
+              <span class="alert-text">Обновление 7.878.98</span>
+            </div>
+            
+            <div class="notification-card blogger-notification" data-type="blogger" onclick="openBloggerModal()">
+              <div class="notification-avatar">
+                <img src="assets/rogov.png" alt="Рогов" />
+                <span class="blogger-name">Рогов</span>
+              </div>
+              <div class="notification-content">
+                <div class="notification-title">Новая прямая интеграция!</div>
+                <div class="notification-metrics">
+                  <div class="metric-item">
+                    <span class="metric-value">999 999</span>
+                    <span class="metric-label">кликов на 1 интеграцию</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-value">999 999</span>
+                    <span class="metric-label">переходов на 1 интеграцию</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-value">999 999</span>
+                    <span class="metric-label">покупок на 1 интеграцию</span>
+                  </div>
+                </div>
+                <div class="notification-budget">
+                  <span class="budget-label">Средний бюджет:</span>
+                  <span class="budget-value">999 000р.</span>
+                </div>
+              </div>
+              <div class="notification-social">
+                <div class="social-platform">VK</div>
+                <div class="social-platform">YouTube</div>
+                <div class="social-platform">Telegram</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <div class="modal-overlay" id="modalOverlay"></div>
+      <div class="modal" id="modal"></div>
+      
+      <div class="notification-modal" id="notificationModal">
+        <div class="notification-modal-content">
+          <div class="notification-modal-header">
+            <h2 class="notification-modal-title" id="modalTitle"></h2>
+            <button class="notification-modal-close" onclick="closeNotificationModal()">×</button>
+          </div>
+          <div class="notification-modal-body" id="modalBody">
+            *Ахуеть что-то важное*
+          </div>
+          <div class="notification-modal-footer">
+            <button class="notification-modal-btn secondary" onclick="closeNotificationModal()">Закрыть</button>
+            <button class="notification-modal-btn primary" onclick="closeNotificationModal()">Понятно</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/modal.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/tooltips.js"></script>
+  <script>
+     function openNotificationModal(title) {
+       console.log('openNotificationModal called with title:', title);
+       
+       const modal = document.getElementById('notificationModal');
+       const modalTitle = document.getElementById('modalTitle');
+       const modalBody = document.getElementById('modalBody');
+       
+       if (!modal) {
+         console.error('Modal element not found!');
+         return;
+       }
+       
+       if (!modalTitle) {
+         console.error('Modal title element not found!');
+         return;
+       }
+       
+       modalTitle.textContent = title;
+       
+       if (title.includes('бюджет')) {
+         modalBody.innerHTML = `
+           <div style="text-align: center;">
+             <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
+             <p><strong>Внимание!</strong> Ваш бюджет почти исчерпан.</p>
+             <p>Рекомендуем пополнить баланс для продолжения работы с блогерами.</p>
+             <p style="margin-top: 20px; font-size: 14px; opacity: 0.8;">Текущий баланс: 100,158 р</p>
+           </div>
+         `;
+       } else if (title.includes('Обновление')) {
+         modalBody.innerHTML = `
+           <div style="text-align: center;">
+             <div style="font-size: 48px; margin-bottom: 20px;">📱</div>
+             <p><strong>Доступно новое обновление!</strong></p>
+             <p>Версия 7.878.98 включает в себя:</p>
+             <ul style="text-align: left; margin: 20px 0; padding-left: 20px;">
+               <li>Улучшенный интерфейс</li>
+               <li>Новые функции аналитики</li>
+               <li>Исправления ошибок</li>
+               <li>Повышенная производительность</li>
+             </ul>
+             <p style="margin-top: 20px; font-size: 14px; opacity: 0.8;">Рекомендуем обновить приложение</p>
+           </div>
+         `;
+       } else {
+         modalBody.innerHTML = `
+           <div style="text-align: center;">
+             <div style="font-size: 48px; margin-bottom: 20px;">ℹ️</div>
+             <p><strong>Важная информация!</strong></p>
+             <p>Это уведомление содержит важную информацию для вашего бизнеса.</p>
+             <p style="margin-top: 20px; font-size: 14px; opacity: 0.8;">Пожалуйста, внимательно ознакомьтесь с содержимым.</p>
+           </div>
+         `;
+       }
+       
+       modal.style.display = 'flex';
+       modal.classList.add('show');
+       
+       document.body.style.overflow = 'hidden';
+       
+       modal.focus();
+       
+       console.log('Modal opened:', title);
+     }
+
+
+
+     function closeNotificationModal() {
+       console.log('closeNotificationModal called');
+       
+       const modal = document.getElementById('notificationModal');
+       
+       if (!modal) {
+         console.error('Modal element not found for closing!');
+         return;
+       }
+       
+       modal.classList.remove('show');
+       
+       setTimeout(() => {
+         modal.style.display = 'none';
+         document.body.style.overflow = '';
+       }, 300);
+       
+       console.log('Modal closed');
+     }
+
+     document.addEventListener('DOMContentLoaded', function() {
+       const modal = document.getElementById('notificationModal');
+       if (modal) {
+         modal.addEventListener('click', function(e) {
+           if (e.target === this) {
+             closeNotificationModal();
+           }
+         });
+       }
+       
+
+     
+     const warningBanner = document.querySelector('.alert-warning');
+        if (warningBanner) {
+          warningBanner.addEventListener('click', function() {
+            openNotificationModal('Осталось менее 30% бюджета!');
+          });
+        }
+        
+        const updateBanner = document.querySelector('.alert-update');
+        if (updateBanner) {
+          updateBanner.addEventListener('click', function() {
+            openNotificationModal('Обновление 7.878.98');
+          });
+        }
+        
+        if (typeof window.showSimpleNotification !== 'undefined') {
+          window.showSimpleNotification = function(message) {
+            console.log('Notification suppressed:', message);
+          };
+        }
+     });
+
+     document.addEventListener('keydown', function(e) {
+       if (e.key === 'Escape') {
+         closeNotificationModal();
+       }
+     });
+
+     document.querySelectorAll('.sidebar-buttons button').forEach(btn => {
+       btn.addEventListener('click', function() {
+         document.querySelectorAll('.sidebar-buttons button').forEach(b => b.classList.remove('active'));
+         this.classList.add('active');
+         
+         const action = this.dataset.action;
+         if (action === 'stats') {
+           window.location.href = 'brand_stats.html';
+         } else if (action === 'partners') {
+           window.location.href = 'brand_partners.html';
+         } else if (action === 'notifications') {
+         } else if (action === 'contracts') {
+           window.location.href = 'brand_contracts.html';
+         } else if (action === 'settings') {
+           window.location.href = 'brand_settings.html';
+         }
+       });
+     });
+
+     document.querySelectorAll('.sidebar-market button').forEach(btn => {
+       if (btn.dataset.action === 'market') {
+         btn.onclick = function() { 
+           openNotificationModal('Маркет');
+         };
+       }
+     });
+  </script>
+</body>
+</html> 

@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Результаты партнёрств</title>
+  <link rel="icon" type="image/png" href="assets/Group 2087325579.png">
+      <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/tooltips.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .logo-container {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+      margin-left: 10%;
+    }
+
+    .logo-spacer {
+      flex: 1;
+    }
+
+    .center-spacer {
+      flex: 1;
+    }
+
+    .partner-card:hover {
+      transform: none !important;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+      border: 1px solid #36393f !important;
+    }
+
+    .blogger-page .partner-card:hover {
+      transform: none !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+    }
+
+    .custom-balance-container {
+      background: none;
+      border-radius: 0;
+      padding: 0;
+      margin-bottom: 16px;
+      width: 280px;
+      max-width: 280px;
+      box-shadow: none;
+      box-sizing: border-box;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .custom-balance-title {
+      font-size: 14px;
+      color: #fff;
+      text-align: left;
+      margin: 0 0 8px 0;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .custom-balance-card {
+      background: #fff;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .custom-balance-amount {
+      font-size: 18px;
+      font-weight: 700;
+      color: #23252b;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      border-radius: 0;
+      text-align: center;
+    }
+
+    .custom-balance-button {
+      background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 0;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease;
+      margin-top: 8px;
+      box-shadow: 0 2px 8px rgba(255, 140, 140, 0.3);
+    }
+
+    .custom-balance-button:hover {
+      background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 140, 140, 0.4);
+    }
+
+    .brand-logo-container {
+      pointer-events: none !important;
+      display: flex !important;
+      justify-content: flex-start !important;
+      padding-right: 30% !important;
+    }
+
+    .brand-logo-img {
+      width: 180px !important;
+      height: 180px !important;
+      object-fit: contain !important;
+      transition: all 0.3s ease !important;
+      cursor: pointer !important;
+      display: block !important;
+      pointer-events: auto !important;
+    }
+
+    .brand-logo-img:hover {
+      transform: scale(1.05);
+    }
+
+    .sidebar-buttons button {
+      width: 280px !important;
+      max-width: 280px !important;
+      background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%) !important;
+      color: #fff !important;
+      border: none !important;
+      border-radius: 16px !important;
+      font-size: 20px !important;
+      font-weight: 600 !important;
+      padding: 14px 0 !important;
+      cursor: pointer !important;
+      margin: 0 auto 8px auto !important;
+      transition: all 0.3s ease !important;
+      box-shadow: 0 4px 12px rgba(255, 140, 140, 0.3) !important;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+      position: relative !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+    }
+
+    .sidebar-buttons button:hover {
+      background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%) !important;
+      box-shadow: 0 6px 16px rgba(255, 140, 140, 0.4) !important;
+      transform: translateY(-2px) scale(1.05) !important;
+    }
+
+    .sidebar-buttons button.active {
+      background: linear-gradient(135deg, #6ca0ff 0%, #5a8fd8 100%) !important;
+      box-shadow: 0 4px 12px rgba(108, 160, 255, 0.4) !important;
+    }
+
+    .sidebar-buttons button.active:hover {
+      background: linear-gradient(135deg, #5a8fd8 0%, #6ca0ff 100%) !important;
+      box-shadow: 0 6px 16px rgba(108, 160, 255, 0.5) !important;
+    }
+
+    .sidebar-market {
+      margin-top: auto !important;
+      padding-top: 20px !important;
+      margin-bottom: 40px !important;
+    }
+
+    .sidebar-market button {
+      width: 280px !important;
+      max-width: 280px !important;
+      background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%) !important;
+      color: #fff !important;
+      border: none !important;
+      border-radius: 12px !important;
+      padding: 16px 20px !important;
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+      box-shadow: 0 4px 12px rgba(255, 140, 140, 0.3) !important;
+      text-align: center !important;
+      position: relative !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+      margin: 0 auto !important;
+    }
+
+    .sidebar-market button:hover {
+      background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%) !important;
+      box-shadow: 0 6px 16px rgba(255, 140, 140, 0.4) !important;
+      transform: translateY(-2px) scale(1.05) !important;
+    }
+
+    .sidebar-market button.active {
+      background: linear-gradient(135deg, #6ca0ff 0%, #5a8fd8 100%) !important;
+      box-shadow: 0 4px 12px rgba(108, 160, 255, 0.4) !important;
+    }
+
+    .sidebar-market button.active:hover {
+      background: linear-gradient(135deg, #5a8fd8 0%, #6ca0ff 100%) !important;
+      box-shadow: 0 6px 16px rgba(108, 160, 255, 0.5) !important;
+    }
+
+    .partners-table-wrapper {
+      background: #23252b;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      border: 1px solid #36393f;
+    }
+
+    .partners-cards {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      border: 1px solid #36393f;
+    }
+
+    .partner-card:first-child .partners-table-wrapper {
+      border-radius: 16px 16px 0 0;
+    }
+
+    .partner-card:last-child .partners-table-wrapper {
+      border-radius: 0 0 16px 16px;
+    }
+
+    .partner-card:not(:first-child):not(:last-child) .partners-table-wrapper {
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .partners-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #23252b;
+      table-layout: fixed;
+    }
+
+    .partners-table th:nth-child(1),
+    .partners-table td:nth-child(1) {
+      width: 25%;
+    }
+
+    .partners-table th:nth-child(2),
+    .partners-table td:nth-child(2) {
+      width: 18%;
+    }
+
+    .partners-table th:nth-child(3),
+    .partners-table td:nth-child(3) {
+      width: 15%;
+    }
+
+    .partners-table th:nth-child(4),
+    .partners-table td:nth-child(4) {
+      width: 15%;
+    }
+
+    .partners-table th:nth-child(5),
+    .partners-table td:nth-child(5) {
+      width: 15%;
+    }
+
+    .partners-table th:nth-child(6),
+    .partners-table td:nth-child(6) {
+      width: 12%;
+    }
+
+    .partners-table th,
+    .partners-table td {
+      padding: 12px 20px;
+      text-align: left;
+      border-bottom: 1px solid #36393f;
+    }
+
+    .partners-table th {
+      background: linear-gradient(135deg, #36393f 0%, #2c2f33 100%);
+      font-weight: 700;
+      color: #ffffff;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .partners-table th:first-child {
+      padding-left: 32px;
+    }
+
+    .partners-table th:last-child {
+      padding-right: 32px;
+    }
+
+    .partners-table td {
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .partners-table td:first-child {
+      padding-left: 32px;
+    }
+
+    .partners-table tr {
+      transition: all 0.2s ease;
+    }
+
+    .partners-table tr:not(:last-child) td {
+      border-bottom: 1px solid #36393f;
+    }
+
+    .partners-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .partners-table tr:hover {
+      background: linear-gradient(135deg, #444652 0%, #3a3d45 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(108, 160, 255, 0.2);
+    }
+
+    .partners-table tr:last-child td:first-child {
+      border-bottom-left-radius: 16px;
+    }
+
+    .partners-table tr:last-child td:last-child {
+      border-bottom-right-radius: 16px;
+    }
+
+    .partners-table a {
+      color: #6ca0ff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .partners-table a:hover {
+      color: #5a8fd8;
+      text-decoration: underline;
+    }
+
+    
+    .partner-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .partner-avatar {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      box-shadow: 0 2px 8px rgba(255, 140, 140, 0.3);
+    }
+
+    .partner-details h4 {
+      margin: 0 0 2px 0;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .partner-details p {
+      margin: 0;
+      color: #bdbdbd;
+      font-weight: 500;
+      font-size: 10px;
+    }
+
+    .metric-value {
+      font-weight: 700;
+      color: #ffffff;
+      font-size: 11px;
+      display: block;
+    }
+
+    .metric-label {
+      margin-top: 4px;
+      font-weight: 500;
+      color: #bdbdbd;
+    }
+
+    .platform-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .platform-tag {
+      background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      border: 1px solid #4a5568;
+    }
+
+    .platform-links {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .platform-links a {
+      color: #6ca0ff;
+      text-decoration: underline;
+      font-size: 10px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .platform-links a:hover {
+      color: #5a8fd8;
+    }
+
+    .partner-analytics, .analytics-block {
+      background: none !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      margin: 0 !important;
+      padding: 32px 0 0 0 !important;
+      max-width: 100%;
+      overflow: visible;
+    }
+
+    .analytics-charts {
+      display: flex;
+      flex-direction: row;
+      gap: 32px;
+      margin-top: 0;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      overflow-x: visible;
+      overflow-y: visible;
+      padding-bottom: 0;
+      background: none;
+    }
+
+    .analytics-chart-block {
+      background: none;
+      border-radius: 0;
+      padding: 0;
+      min-width: 220px;
+      max-width: 260px;
+      box-shadow: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: none;
+      position: relative;
+      margin-bottom: 0;
+      border: none;
+      margin-top: 0;
+      cursor: pointer;
+    }
+
+    .analytics-chart-block:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .analytics-chart-block.selected {
+      box-shadow: none;
+      border: none;
+    }
+
+    .analytics-chart-title {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .analytics-chart-label {
+      color: #fff;
+      font-size: 16px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+   
+    .chart-container {
+      width: 220px;
+      height: 220px;
+      position: relative;
+    }
+
+    .chart-container canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+   
+    .partner-row {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .partner-row:hover {
+      background: linear-gradient(135deg, #444652 0%, #3a3d45 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(108, 160, 255, 0.2);
+    }
+
+    
+    @media (max-width: 768px) {
+       
+        .app {
+          flex-direction: column !important;
+        }
+
+       
+        .sidebar {
+          position: relative !important;
+          width: 100% !important;
+          min-width: 100% !important;
+          max-width: 100% !important;
+          height: auto !important;
+          min-height: auto !important;
+          flex-direction: row !important;
+          flex-wrap: wrap !important;
+          padding: 16px !important;
+          gap: 16px !important;
+        }
+
+       
+        .sidebar-header {
+          flex-direction: row !important;
+          width: 100% !important;
+          justify-content: space-between !important;
+          align-items: center !important;
+          margin-bottom: 0 !important;
+        }
+
+        
+        .logo-container {
+          margin-left: 0 !important;
+          width: auto !important;
+        }
+
+        .company-logo {
+          width: 60px !important;
+          height: 60px !important;
+          margin: 0 !important;
+        }
+
+       
+        .brand-logo-container {
+          width: auto !important;
+          max-width: none !important;
+          margin: 0 !important;
+          flex: 1 !important;
+          display: flex !important;
+          justify-content: center !important;
+        }
+
+        .brand-logo-img {
+          width: 120px !important;
+          height: 120px !important;
+        }
+
+       
+        .custom-balance-container {
+          width: auto !important;
+          max-width: none !important;
+          margin: 0 !important;
+        }
+
+        .custom-balance-card {
+          padding: 8px 12px !important;
+        }
+
+        .custom-balance-amount {
+          font-size: 16px !important;
+        }
+
+        .custom-balance-button {
+          font-size: 12px !important;
+          padding: 8px 0 !important;
+        }
+
+       
+        .sidebar-buttons {
+          width: 100% !important;
+          display: flex !important;
+          flex-direction: row !important;
+          flex-wrap: wrap !important;
+          gap: 8px !important;
+          justify-content: center !important;
+          margin: 0 !important;
+        }
+
+        .sidebar-buttons button {
+          width: auto !important;
+          max-width: none !important;
+          flex: 1 !important;
+          min-width: 120px !important;
+          font-size: 14px !important;
+          padding: 10px 8px !important;
+          margin: 0 !important;
+        }
+
+       
+        .sidebar-market {
+          margin: 0 !important;
+          padding: 0 !important;
+          width: auto !important;
+          flex: 1 !important;
+          min-width: 120px !important;
+        }
+
+        .sidebar-market button {
+          width: 100% !important;
+          max-width: none !important;
+          font-size: 14px !important;
+          padding: 10px 8px !important;
+          margin: 0 !important;
+        }
+
+        
+        .main {
+          margin-left: 0 !important;
+          width: 100% !important;
+          padding: 16px !important;
+          background: #23252b !important;
+          border-radius: 0 !important;
+          margin-top: 0 !important;
+        }
+
+        .main-header {
+          background: #2a2d35 !important;
+          border-radius: 16px !important;
+          padding: 20px !important;
+          margin-bottom: 20px !important;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+          border: 1px solid #3a3d45 !important;
+          text-align: center !important;
+        }
+
+        .main-header h1 {
+          font-size: 24px !important;
+          color: #fff !important;
+          margin: 0 0 16px 0 !important;
+          text-align: center !important;
+          font-weight: 700 !important;
+        }
+
+        
+        .partners-table-wrapper {
+          border-radius: 12px !important;
+          overflow-x: auto !important;
+        }
+
+        .partners-cards {
+          border-radius: 12px !important;
+          overflow: hidden !important;
+        }
+
+        .partner-card:first-child .partners-table-wrapper {
+          border-radius: 12px 12px 0 0 !important;
+        }
+
+        .partner-card:last-child .partners-table-wrapper {
+          border-radius: 0 0 12px 12px !important;
+        }
+
+        .partner-card:not(:first-child):not(:last-child) .partners-table-wrapper {
+          border-radius: 0 !important;
+          box-shadow: none !important;
+        }
+
+        .partners-table {
+          min-width: 600px !important;
+        }
+
+        .partners-table th,
+        .partners-table td {
+          padding: 12px 8px !important;
+          font-size: 12px !important;
+        }
+
+        .partners-table th:first-child,
+        .partners-table td:first-child {
+          padding-left: 12px !important;
+        }
+
+        .partners-table th:last-child,
+        .partners-table td:last-child {
+          padding-right: 12px !important;
+        }
+
+        
+        .partner-info {
+          gap: 8px !important;
+        }
+
+        .partner-avatar {
+          width: 32px !important;
+          height: 32px !important;
+          font-size: 12px !important;
+        }
+
+        .partner-details h4 {
+          font-size: 13px !important;
+          margin: 0 0 4px 0 !important;
+        }
+
+        .partner-details p {
+          font-size: 11px !important;
+        }
+
+        
+        .metric-value {
+          font-size: 12px !important;
+        }
+
+        .metric-label {
+          font-size: 10px !important;
+        }
+
+        
+        .platform-tags {
+          gap: 4px !important;
+        }
+
+        .platform-tag {
+          padding: 4px 8px !important;
+          font-size: 10px !important;
+        }
+
+        .platform-links a {
+          font-size: 11px !important;
+        }
+
+        
+        .analytics-charts {
+          flex-direction: column !important;
+          gap: 16px !important;
+          align-items: center !important;
+        }
+
+        .analytics-chart-block {
+          min-width: 180px !important;
+          max-width: 220px !important;
+        }
+
+        .chart-container {
+          width: 180px !important;
+          height: 180px !important;
+        }
+
+        .analytics-chart-title {
+          font-size: 14px !important;
+          margin-bottom: 12px !important;
+        }
+
+        .analytics-chart-label {
+          font-size: 12px !important;
+          margin-top: 6px !important;
+        }
+
+        
+        .partner-info {
+          gap: 8px !important;
+        }
+
+        .partner-avatar {
+          width: 32px !important;
+          height: 32px !important;
+          font-size: 12px !important;
+        }
+
+        .partner-details h4 {
+          font-size: 13px !important;
+          margin: 0 0 4px 0 !important;
+        }
+
+        .partner-details p {
+          font-size: 11px !important;
+        }
+
+
+        .metric-value {
+          font-size: 12px !important;
+        }
+
+        .metric-label {
+          font-size: 10px !important;
+        }
+
+           
+        .platform-tags {
+          gap: 4px !important;
+        }
+
+        .platform-tag {
+          padding: 4px 8px !important;
+          font-size: 10px !important;
+        }
+
+        .platform-links a {
+          font-size: 11px !important;
+        }
+
+           
+        .analytics-charts {
+          flex-direction: column !important;
+          gap: 16px !important;
+          align-items: center !important;
+        }
+
+        .analytics-chart-block {
+          min-width: 180px !important;
+          max-width: 220px !important;
+        }
+
+        .chart-container {
+          width: 180px !important;
+          height: 180px !important;
+        }
+
+        .analytics-chart-title {
+          font-size: 14px !important;
+          margin-bottom: 12px !important;
+        }
+
+        .analytics-chart-label {
+          font-size: 12px !important;
+          margin-top: 6px !important;
+        }
+
+           
+        .modal {
+          width: 95% !important;
+          max-width: 95% !important;
+          margin: 20px auto !important;
+          border-radius: 20px !important;
+          background: linear-gradient(135deg, #2a2d35 0%, #23252b 100%) !important;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
+          border: 1px solid rgba(255, 140, 140, 0.3) !important;
+        }
+
+        .modal-content {
+          padding: 24px !important;
+          border-radius: 20px !important;
+        }
+
+        .modal-content h2 {
+          font-size: 20px !important;
+          color: #fff !important;
+          text-align: center !important;
+          margin-bottom: 20px !important;
+          text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+        }
+
+        .modal-content p {
+          color: #fff !important;
+          font-size: 14px !important;
+          line-height: 1.5 !important;
+          margin-bottom: 16px !important;
+        }
+
+        .modal-content label {
+          color: #fff !important;
+          font-size: 14px !important;
+          font-weight: 600 !important;
+          margin-bottom: 8px !important;
+          display: block !important;
+        }
+
+        .modal-content input[type="text"],
+        .modal-content input[type="number"] {
+          width: 100% !important;
+          padding: 12px !important;
+          border: 1px solid rgba(255, 140, 140, 0.3) !important;
+          border-radius: 8px !important;
+          background: rgba(255, 255, 255, 0.1) !important;
+          color: #fff !important;
+          font-size: 14px !important;
+          margin-bottom: 16px !important;
+        }
+
+        .modal-content input[type="text"]:focus,
+        .modal-content input[type="number"]:focus {
+          outline: none !important;
+          border-color: #ff8c8c !important;
+          box-shadow: 0 0 0 2px rgba(255, 140, 140, 0.2) !important;
+        }
+
+        .modal-content button {
+          background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%) !important;
+          color: #fff !important;
+          border: none !important;
+          border-radius: 8px !important;
+          padding: 12px 24px !important;
+          font-size: 14px !important;
+          font-weight: 600 !important;
+          cursor: pointer !important;
+          transition: all 0.3s ease !important;
+          box-shadow: 0 4px 12px rgba(255, 140, 140, 0.3) !important;
+          margin: 8px !important;
+          width: 100% !important;
+          max-width: 200px !important;
+        }
+
+        .modal-content button:hover {
+          background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%) !important;
+          box-shadow: 0 6px 16px rgba(255, 140, 140, 0.4) !important;
+          transform: translateY(-2px) !important;
+        }
+
+        .modal-overlay {
+          background: rgba(0, 0, 0, 0.8) !important;
+          backdrop-filter: blur(5px) !important;
+        }
+    }
+
+           
+    @media (max-width: 480px) {
+      .sidebar {
+        padding: 12px !important;
+        gap: 12px !important;
+      }
+
+      .brand-logo-img {
+        width: 100px !important;
+        height: 100px !important;
+      }
+
+      .custom-balance-amount {
+        font-size: 14px !important;
+      }
+
+      .custom-balance-button {
+        font-size: 11px !important;
+        padding: 6px 0 !important;
+      }
+
+      .sidebar-buttons button,
+      .sidebar-market button {
+        font-size: 12px !important;
+        padding: 8px 6px !important;
+        min-width: 100px !important;
+      }
+
+
+            }
+
+
+    </style>
+</head>
+<body>
+  <div class="container">
+    <div class="app">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-container">
+            <img src="assets/Group 2087325579.png" alt="Логотип компании" class="company-logo" style="width:80px;height:80px;object-fit:contain;margin-bottom:20px;margin-top:20px;" />
+            <div class="logo-spacer"></div>
+          </div>
+          <div class="brand-logo-container">
+            <img src="assets/brend_logo.png" alt="Логотип бренда" class="brand-logo-img" onclick="window.location.href='brand_index.html';">
+          </div>
+          <div class="custom-balance-container">
+            <div class="custom-balance-title">Баланс</div>
+            <div class="custom-balance-card">
+              <div class="custom-balance-amount" id="balanceValue">1000 р</div>
+              <button class="custom-balance-button" id="topupBtn">Пополнить</button>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-buttons">
+          <button data-action="stats">Статистика</button>
+          <button data-action="partners" class="active">Партнеры</button>
+          <button data-action="notifications">Уведомления</button>
+          <button data-action="contracts">Контракты</button>
+          <button data-action="settings">Настройки</button>
+        </div>
+        <div class="sidebar-market">
+          <button data-action="market">Маркет</button>
+        </div>
+      </aside>
+      <main class="main">
+        <div class="main-header">
+          <h1 class="page-title-with-tooltip">
+            Результаты партнёрств
+            <div class="tooltip-icon" id="partnersTooltip">
+              ?
+              <div class="tooltip-content">Просматривайте результаты сотрудничества с блогерами</div>
+            </div>
+          </h1>
+        </div>
+        <div style="padding:32px 38px;">
+          <div style="overflow-x:auto;">
+            <div class="partners-cards" id="partnersCards"></div>
+          </div>
+        </div>
+      </main>
+      <div class="modal-overlay" id="modalOverlay"></div>
+      <div class="modal" id="modal"></div>
+    </div>
+  </div>
+  <script src="js/partners.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/tooltips.js"></script>
+  <script>
+    const partnersData = [
+      {
+        id: 1,
+        name: 'Александр Рогов',
+        avatar: 'АР'
+      },
+      {
+        id: 2,
+        name: 'Мария Петрова',
+        avatar: 'МП'
+      },
+      {
+        id: 3,
+        name: 'Дмитрий Сидоров',
+        avatar: 'ДС'
+      }
+    ];
+
+    function createDonutChart(canvasId, data, percentage) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      const chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Основной', 'Дополнительный'],
+          datasets: [{
+            data: data,
+            backgroundColor: ['#ff8c8c', '#6ca0ff', '#36393f'],
+            borderWidth: 0,
+            cutout: '70%'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              enabled: false
+            }
+          },
+          elements: {
+            arc: {
+              borderWidth: 0
+            }
+          }
+        }
+      });
+
+     
+      setTimeout(() => {
+        try {
+          const ctx = canvas.getContext('2d');
+          ctx.font = 'bold 48px Arial';
+          ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'center';
+          ctx.fillText(percentage + '%', 100, 100);
+        } catch (error) {
+          console.warn('Не удалось добавить текст в центр графика:', error);
+        }
+      }, 500);
+
+      return chart;
+    }
+
+    
+    function createPartnerCard(partner, index, totalPartners) {
+      const card = document.createElement('div');
+      card.className = 'partner-card';
+      
+      let cardStyles = `
+        background: #23252b;
+        border-radius: 16px;
+        padding: 16px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        border: 1px solid #36393f;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      `;
+      
+      if (index === 0) {
+        cardStyles = `
+          background: #23252b;
+          border-radius: 16px 16px 0 0;
+          padding: 4px;
+          margin-bottom: 0;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+          border: 1px solid #36393f;
+          border-bottom: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        `;
+      }
+      
+      else if (index === totalPartners - 1) {
+        cardStyles = `
+          background: #23252b;
+          border-radius: 0 0 16px 16px;
+          padding: 4px;
+          margin-bottom: 24px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+          border: 1px solid #36393f;
+          border-top: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        `;
+      }
+      
+      else {
+        cardStyles = `
+          background: #23252b;
+          border-radius: 0;
+          padding: 4px;
+          margin-bottom: 0;
+          box-shadow: none;
+          border: 1px solid #36393f;
+          border-top: none;
+          border-bottom: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        `;
+      }
+      
+      card.style.cssText = cardStyles;
+      card.onmouseover = () => card.style.transform = 'translateY(-2px)';
+      card.onmouseout = () => card.style.transform = 'translateY(0)';
+
+      const tableHeaders = index === 0 ? `
+        <thead>
+          <tr>
+            <th>Партнёр</th>
+            <th>Бюджет</th>
+            <th>Клики</th>
+            <th>Переходы</th>
+            <th>Покупки</th>
+            <th>Площадки</th>
+          </tr>
+        </thead>
+      ` : '';
+
+      card.innerHTML = `
+        <div class="partners-table-wrapper" style="${index === 0 || index === totalPartners - 1 ? '' : 'border-radius: 0; box-shadow: none;'}">
+          <table class="partners-table">
+            ${tableHeaders}
+            <tbody>
+              <tr class="partner-row" data-partner-id="${partner.id}" onclick="showPartnerAnalytics(${partner.id})">
+                <td>
+                  <div class="partner-info">
+                    <div class="partner-avatar">${partner.avatar}</div>
+                    <div class="partner-details">
+                      <h4>${partner.id} ${partner.name}</h4>
+                      <p>2 года партнёрства На квартал</p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="metric-value">1 000 000 рублей</span>
+                </td>
+                <td>
+                  <span class="metric-value">1 000 000 штук</span>
+                </td>
+                <td>
+                  <span class="metric-value">1 000 000 штук</span>
+                </td>
+                <td>
+                  <span class="metric-value">1 000 000 штук</span>
+                </td>
+                <td>
+                  <div class="platform-links">
+                    <a href="#">VK</a><br>
+                    <a href="#">YouTube</a><br>
+                    <a href="#">Telegram</a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="partner-analytics" id="analytics-${partner.id}" style="display: none;">
+          <div class="analytics-charts">
+            <div class="analytics-chart-block" onclick="window.location.href='brand_partner_stats.html'">
+              <div class="analytics-chart-title">VK</div>
+                                <div class="chart-container">
+                    <canvas id="vkChart-${partner.id}" width="220" height="220"></canvas>
+                  </div>
+                  <div class="analytics-chart-label">65% эффективность</div>
+                </div>
+                <div class="analytics-chart-block" onclick="window.location.href='brand_partner_stats.html'">
+                  <div class="analytics-chart-title">YouTube</div>
+                  <div class="chart-container">
+                    <canvas id="youtubeChart-${partner.id}" width="220" height="220"></canvas>
+                  </div>
+                  <div class="analytics-chart-label">45% конверсия</div>
+                </div>
+                <div class="analytics-chart-block" onclick="window.location.href='brand_partner_stats.html'">
+                  <div class="analytics-chart-title">Telegram</div>
+                  <div class="chart-container">
+                    <canvas id="telegramChart-${partner.id}" width="220" height="220"></canvas>
+                  </div>
+                  <div class="analytics-chart-label">70% охват</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      return card;
+    }
+
+   
+    function showPartnerAnalytics(partnerId) {
+      const analyticsDiv = document.getElementById(`analytics-${partnerId}`);
+      
+      if (!analyticsDiv) return;
+
+      if (analyticsDiv.style.display === 'none') {
+        analyticsDiv.style.display = 'block';
+        
+        setTimeout(() => {
+          createDonutChart(`vkChart-${partnerId}`, [65, 35], 65);
+          createDonutChart(`youtubeChart-${partnerId}`, [45, 55], 45);
+          createDonutChart(`telegramChart-${partnerId}`, [70, 30], 70);
+        }, 100);
+      } else {
+        analyticsDiv.style.display = 'none';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const partnersCards = document.getElementById('partnersCards');
+      
+      partnersData.forEach((partner, index) => {
+        const card = createPartnerCard(partner, index, partnersData.length);
+        partnersCards.appendChild(card);
+      });
+
+      var brandLogo = document.getElementById('brandLogo');
+      if (brandLogo) {
+        brandLogo.onclick = function() {
+          window.location.href = 'brand_index.html';
+        };
+      }
+      
+      document.querySelectorAll('.sidebar-buttons button').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.sidebar-buttons button').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          
+          const action = this.dataset.action;
+          if (action === 'stats') {
+            window.location.href = 'brand_stats.html';
+          } else if (action === 'partners') {
+          } else if (action === 'notifications') {
+            window.location.href = 'brand_notifications.html';
+          } else if (action === 'contracts') {
+            window.location.href = 'brand_contracts.html';
+          } else if (action === 'settings') {
+            window.location.href = 'brand_settings.html';
+          }
+        });
+      });
+
+      document.querySelectorAll('.sidebar-market button').forEach(btn => {
+        if (btn.dataset.action === 'market') {
+          btn.onclick = function() { 
+            openModal(`
+              <div class="market-stub-modal">
+                <button class="modal-close">&times;</button>
+                <div class="market-stub-content">
+                  <div class="market-stub-icon">🛒</div>
+                  <h2>Маркет</h2>
+                  <p>Маркет пока в разработке! Скоро здесь появится возможность покупать товары и услуги.</p>
+                </div>
+              </div>
+            `);
+          };
+        }
+      });
+      
+      var topupBtn = document.getElementById('topupBtn');
+      if (topupBtn) {
+        topupBtn.addEventListener('click', function() {
+          openModal(`
+            <div class="topup-modal">
+              <button class="modal-close">&times;</button>
+              <div class="topup-modal-header">
+                <h2>Пополнение баланса</h2>
+              </div>
+              <div class="topup-modal-content">
+                <div class="topup-left-section">
+                  <div class="amount-controls">
+                    <button class="amount-btn minus-btn" id="minusBtn">-</button>
+                    <div class="amount-display" id="amountDisplay">10 000 p</div>
+                    <button class="amount-btn plus-btn" id="plusBtn">+</button>
+                  </div>
+                  
+                  <div class="entity-type-selection">
+                    <button class="entity-btn individual-btn active" id="individualBtn">Физ.лицо</button>
+                    <button class="entity-btn legal-btn" id="legalBtn">Юр.лицо</button>
+                  </div>
+                  
+                  <div class="payment-method-section">
+                    <label class="section-label">Способ оплаты</label>
+                    <button class="dropdown-btn" id="paymentMethodBtn">
+                      <span>Банковская карта</span>
+                      <span class="chevron">▼</span>
+                    </button>
+                  </div>
+                  
+                  <div class="payer-section">
+                    <label class="section-label">Плательщик</label>
+                    <button class="dropdown-btn" id="payerBtn">
+                      <span id="payerName">Иванов Иван Иванович</span>
+                      <span class="chevron">▼</span>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="topup-right-section">
+                  <button class="topup-action-btn" id="topupActionBtn">
+                    <span>Пополнить</span>
+                    <span>счет</span>
+                    <span id="topupAmount">10 000 p</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `);
+          
+          initializeTopupModal();
+        });
+      }
+    });
+  </script>
+</body>
+</html>

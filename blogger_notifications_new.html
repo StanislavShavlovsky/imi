@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уведомления блогера</title>
+    <link rel="icon" type="image/png" href="assets/Group 2087325579.png">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+       
+        .logo-container {
+          display: flex;
+          justify-content: flex-start;
+          width: 100%;
+          margin-left: 10%;
+        }
+
+        .logo-spacer {
+          flex: 1;
+        }
+
+        .center-spacer {
+          flex: 1;
+        }
+
+        
+        .custom-balance-container {
+          background: none;
+          border-radius: 0;
+          padding: 0;
+          margin-bottom: 16px;
+          width: 280px;
+          max-width: 280px;
+          box-shadow: none;
+          box-sizing: border-box;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .custom-balance-title {
+          font-size: 14px;
+          color: #fff;
+          text-align: left;
+          margin: 0 0 8px 0;
+          font-weight: 500;
+          letter-spacing: 0.01em;
+        }
+
+        .custom-balance-card {
+          background: #fff;
+          border-radius: 8px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 12px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+          width: 100%;
+          min-width: 0;
+          max-width: 100%;
+          box-sizing: border-box;
+        }
+
+        .custom-balance-amount {
+          font-size: 20px;
+          font-weight: 700;
+          color: #23252b;
+          margin: 0;
+          padding: 0;
+          background: transparent;
+          border-radius: 0;
+          text-align: center;
+        }
+
+        .custom-balance-button {
+          background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%);
+          color: #fff;
+          border: none;
+          border-radius: 8px;
+          padding: 10px 0;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          width: 100%;
+          transition: all 0.3s ease;
+          margin-top: 8px;
+          box-shadow: 0 2px 8px rgba(255, 140, 140, 0.3);
+        }
+
+        .custom-balance-button:hover {
+          background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(255, 140, 140, 0.4);
+        }
+
+        .blogger-profile-block {
+          display: block !important;
+          width: 280px !important;
+          max-width: 280px !important;
+          margin: 0 auto 24px auto !important;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-sizing: border-box !important;
+        }
+
+        .blogger-profile-block:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .blogger-avatar-small {
+          background: #fff;
+          border-radius: 16px;
+          padding: 40px;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          transition: all 0.3s ease;
+          width: 280px !important;
+          max-width: 280px !important;
+          margin: 0 auto !important;
+          box-sizing: border-box !important;
+        }
+
+        .blogger-avatar-small:hover {
+          box-shadow: 0 8px 24px rgba(255, 140, 140, 0.2);
+          transform: scale(1.02);
+        }
+
+        .blogger-icon {
+          font-size: 28px !important;
+          color: #ff8c8c !important;
+          background: rgba(255, 140, 140, 0.1) !important;
+          border-radius: 50% !important;
+          width: 56px !important;
+          height: 56px !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          transition: all 0.3s ease !important;
+        }
+
+        .blogger-avatar-small:hover .blogger-icon {
+          background: #ff8c8c;
+          color: #fff;
+          transform: scale(1.1);
+        }
+
+        .blogger-avatar-img {
+          width: 56px !important;
+          height: 56px !important;
+          border-radius: 12px !important;
+          object-fit: cover !important;
+          border: 2px solid #ff8c8c !important;
+          transition: all 0.3s ease !important;
+        }
+
+        .sidebar-buttons button {
+          width: 280px !important;
+          max-width: 280px !important;
+          background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%) !important;
+          color: #fff !important;
+          border: none !important;
+          border-radius: 16px !important;
+          font-size: 20px !important;
+          font-weight: 600 !important;
+          padding: 14px 0 !important;
+          cursor: pointer !important;
+          margin: 0 auto 8px auto !important;
+          transition: all 0.3s ease !important;
+          box-shadow: 0 4px 12px rgba(255, 140, 140, 0.3) !important;
+          text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+          position: relative !important;
+          overflow: hidden !important;
+          box-sizing: border-box !important;
+        }
+
+                 .sidebar-buttons button:hover {
+           background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%) !important;
+           box-shadow: 0 6px 16px rgba(255, 140, 140, 0.4) !important;
+           transform: translateY(-2px) scale(1.05) !important;
+         }
+
+         .sidebar-buttons button.active {
+           background: linear-gradient(135deg, #6ca0ff 0%, #5a8fd8 100%) !important;
+           box-shadow: 0 4px 12px rgba(108, 160, 255, 0.4) !important;
+         }
+
+         .sidebar-buttons button.active:hover {
+           background: linear-gradient(135deg, #5a8fd8 0%, #6ca0ff 100%) !important;
+           box-shadow: 0 6px 16px rgba(108, 160, 255, 0.5) !important;
+         }
+
+        .sidebar-market button {
+          width: 280px !important;
+          max-width: 280px !important;
+          background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%) !important;
+          color: #fff !important;
+          border: none !important;
+          border-radius: 12px !important;
+          padding: 16px 20px !important;
+          font-size: 16px !important;
+          font-weight: 600 !important;
+          cursor: pointer !important;
+          transition: all 0.3s ease !important;
+          box-shadow: 0 4px 12px rgba(255, 140, 140, 0.3) !important;
+          text-align: center !important;
+          position: relative !important;
+          overflow: hidden !important;
+          box-sizing: border-box !important;
+        }
+
+                 .sidebar-market button:hover {
+           background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%) !important;
+           box-shadow: 0 6px 16px rgba(255, 140, 140, 0.4) !important;
+           transform: translateY(-2px) scale(1.05) !important;
+         }
+
+         .sidebar-market button.active {
+           background: linear-gradient(135deg, #6ca0ff 0%, #5a8fd8 100%) !important;
+           box-shadow: 0 4px 12px rgba(108, 160, 255, 0.4) !important;
+         }
+
+         .sidebar-market button.active:hover {
+           background: linear-gradient(135deg, #5a8fd8 0%, #6ca0ff 100%) !important;
+           box-shadow: 0 6px 16px rgba(108, 160, 255, 0.5) !important;
+         }
+
+         @media (max-width: 768px) {
+           .app {
+             flex-direction: column !important;
+           }
+
+           .sidebar {
+             position: relative !important;
+             width: 100% !important;
+             min-width: 100% !important;
+             max-width: 100% !important;
+             height: auto !important;
+             min-height: auto !important;
+             flex-direction: row !important;
+             flex-wrap: wrap !important;
+             padding: 16px !important;
+             gap: 16px !important;
+           }
+
+           .sidebar-header {
+             flex-direction: row !important;
+             width: 100% !important;
+             justify-content: space-between !important;
+             align-items: center !important;
+             margin-bottom: 0 !important;
+           }
+
+           .logo-container {
+             margin-left: 0 !important;
+             width: auto !important;
+           }
+
+           .company-logo {
+             width: 60px !important;
+             height: 60px !important;
+             margin: 0 !important;
+           }
+
+           .blogger-profile-block {
+             width: auto !important;
+             max-width: none !important;
+             margin: 0 !important;
+             flex: 1 !important;
+             display: flex !important;
+             justify-content: center !important;
+           }
+
+           .blogger-avatar-small {
+             width: auto !important;
+             max-width: none !important;
+             margin: 0 !important;
+             padding: 12px !important;
+           }
+
+           .blogger-avatar-img {
+             width: 40px !important;
+             height: 40px !important;
+           }
+
+           .blogger-icon {
+             width: 40px !important;
+             height: 40px !important;
+             font-size: 20px !important;
+           }
+
+           .custom-balance-container {
+             width: auto !important;
+             max-width: none !important;
+             margin: 0 !important;
+           }
+
+           .custom-balance-card {
+             padding: 8px 12px !important;
+           }
+
+           .custom-balance-amount {
+             font-size: 16px !important;
+           }
+
+           .custom-balance-button {
+             font-size: 12px !important;
+             padding: 8px 0 !important;
+           }
+
+           .sidebar-buttons {
+             width: 100% !important;
+             display: flex !important;
+             flex-direction: row !important;
+             flex-wrap: wrap !important;
+             gap: 8px !important;
+             justify-content: center !important;
+             margin: 0 !important;
+           }
+
+           .sidebar-buttons button {
+             width: auto !important;
+             max-width: none !important;
+             flex: 1 !important;
+             min-width: 120px !important;
+             font-size: 14px !important;
+             padding: 10px 8px !important;
+             margin: 0 !important;
+           }
+
+           .sidebar-market {
+             margin: 0 !important;
+             padding: 0 !important;
+             width: auto !important;
+             flex: 1 !important;
+             min-width: 120px !important;
+           }
+
+           .sidebar-market button {
+             width: 100% !important;
+             max-width: none !important;
+             font-size: 14px !important;
+             padding: 10px 8px !important;
+             margin: 0 !important;
+           }
+
+           .main {
+             margin-left: 0 !important;
+             width: 100% !important;
+             padding: 16px !important;
+             background: #ffffff !important;
+             border-radius: 0 !important;
+             margin-top: 0 !important;
+           }
+
+           .main-header {
+             background: #ffffff !important;
+             border-radius: 16px !important;
+             padding: 20px !important;
+             margin-bottom: 20px !important;
+             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+             border: 1px solid #e5e5e5 !important;
+             text-align: center !important;
+           }
+
+           .main-header h1 {
+             font-size: 24px !important;
+             color: #23252b !important;
+             margin: 0 0 16px 0 !important;
+             text-align: center !important;
+             font-weight: 700 !important;
+           }
+
+           .notifications-tabs {
+             flex-direction: column !important;
+             gap: 8px !important;
+             margin-bottom: 20px !important;
+           }
+
+           .notifications-tab-btn {
+             width: 100% !important;
+             font-size: 14px !important;
+             padding: 12px 16px !important;
+             border-radius: 12px !important;
+           }
+
+
+           .notification-card {
+             flex-direction: column !important;
+             padding: 16px !important;
+             border-radius: 12px !important;
+             margin-bottom: 16px !important;
+           }
+
+           .notification-avatar {
+             margin-bottom: 12px !important;
+             justify-content: center !important;
+           }
+
+           .notification-avatar img {
+             width: 60px !important;
+             height: 60px !important;
+           }
+
+           .notification-content {
+             text-align: center !important;
+             margin-bottom: 12px !important;
+           }
+
+           .notification-title {
+             font-size: 16px !important;
+             margin-bottom: 12px !important;
+           }
+
+           .notification-text {
+             font-size: 14px !important;
+             margin-bottom: 8px !important;
+           }
+
+           .notification-time {
+             font-size: 12px !important;
+           }
+
+           .notification-action-btn {
+             font-size: 14px !important;
+             padding: 8px 16px !important;
+             border-radius: 8px !important;
+           }
+         }
+
+         
+         @media (max-width: 480px) {
+           .sidebar {
+             padding: 12px !important;
+             gap: 12px !important;
+           }
+
+           .blogger-avatar-img {
+             width: 35px !important;
+             height: 35px !important;
+           }
+
+           .blogger-icon {
+             width: 35px !important;
+             height: 35px !important;
+             font-size: 18px !important;
+           }
+
+           .custom-balance-amount {
+             font-size: 14px !important;
+           }
+
+           .custom-balance-button {
+             font-size: 11px !important;
+             padding: 6px 0 !important;
+           }
+
+           .sidebar-buttons button,
+           .sidebar-market button {
+             font-size: 12px !important;
+             padding: 8px 6px !important;
+             min-width: 100px !important;
+           }
+
+
+           .notifications-tab-btn {
+             font-size: 12px !important;
+             padding: 10px 12px !important;
+           }
+
+           .notification-card {
+             padding: 12px !important;
+             margin-bottom: 12px !important;
+           }
+
+           .notification-avatar img {
+             width: 50px !important;
+             height: 50px !important;
+           }
+
+           .notification-title {
+             font-size: 14px !important;
+             margin-bottom: 10px !important;
+           }
+
+           .notification-text {
+             font-size: 12px !important;
+             margin-bottom: 6px !important;
+           }
+
+           .notification-time {
+             font-size: 10px !important;
+           }
+
+           .notification-action-btn {
+             font-size: 12px !important;
+             padding: 6px 12px !important;
+           }
+         }
+    </style>
+</head>
+<body class="blogger-page">
+    <div class="container">
+        <div class="app">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo-container">
+                        <img src="assets/Group 2087325579.png" alt="Логотип компании" class="company-logo" style="width:80px;height:80px;object-fit:contain;margin-bottom:20px;margin-top:20px;" />
+                        <div class="logo-spacer"></div>
+                    </div>
+                    <div class="blogger-profile-block" onclick="window.location.href='blogger_profile.html';">
+                        <div class="blogger-avatar-small">
+                            <img src="assets/rogov.png" alt="Александр Рогов" class="blogger-avatar-img">
+                            <div class="center-spacer"></div>
+                            <div class="blogger-icon">👔</div>
+                        </div>
+                    </div>
+                    <div class="custom-balance-container">
+                        <div class="custom-balance-title">Баланс</div>
+                        <div class="custom-balance-card">
+                            <div class="custom-balance-amount" id="balanceValue">1000 р</div>
+                            <button class="custom-balance-button" id="withdrawBtn">Вывести</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-buttons">
+                    <button data-action="stats">Статистика</button>
+                    <button data-action="partners">Партнеры</button>
+                    <button data-action="notifications" class="active">Уведомления</button>
+                    <button data-action="contracts">Контракты</button>
+                    <button data-action="settings">Настройки</button>
+                </div>
+                        <div class="sidebar-market">
+          <button data-action="market">Маркет</button>
+        </div>
+            </aside>
+            <main class="main">
+                <div class="main-header">
+                    <h1>Уведомления</h1>
+                </div>
+                <div class="notifications-content">
+                    <div class="notifications-tabs">
+                        <button class="notifications-tab-btn active" data-tab="all">Все</button>
+                        <button class="notifications-tab-btn" data-tab="bloggers">Блогеры</button>
+                        <button class="notifications-tab-btn" data-tab="products">Товары</button>
+                    </div>
+                    
+                    <div class="notifications-list">
+                        <!-- Уведомления будут добавляться динамически -->
+                        <div class="notification-card" data-type="blogger">
+                            <div class="notification-avatar">
+                                <img src="assets/rogov.png" alt="Блогер" />
+                            </div>
+                            <div class="notification-content">
+                                <div class="notification-title">Новый блогер присоединился</div>
+                                <div class="notification-text">Рогов Иван подал заявку на сотрудничество</div>
+                                <div class="notification-time">2 часа назад</div>
+                            </div>
+                            <button class="notification-action-btn" onclick="openBloggerModal('Рогов Иван', 'assets/rogov.png')">Просмотр</button>
+                        </div>
+                        
+                        <div class="notification-card" data-type="product">
+                            <div class="notification-avatar">
+                                <img src="assets/clothes.png" alt="Товар" />
+                            </div>
+                            <div class="notification-content">
+                                <div class="notification-title">Новый товар на модерации</div>
+                                <div class="notification-text">Футболка Летний стиль требует одобрения</div>
+                                <div class="notification-time">5 часов назад</div>
+                            </div>
+                            <button class="notification-action-btn" onclick="openProductModal('Футболка Летний стиль', 'assets/clothes.png')">Просмотр</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- Модальные окна -->
+            <div class="modal-overlay" id="modalOverlay"></div>
+            <div class="modal" id="modal"></div>
+        </div>
+    </div>
+    <script src="js/notifications.js"></script>
+    <script src="js/modal.js"></script>
+    <script>
+        function openModal(contentHtml) {
+          const modal = document.getElementById('modal');
+          const modalOverlay = document.getElementById('modalOverlay');
+          
+          if (modal && modalOverlay) {
+            modal.innerHTML = contentHtml;
+            modal.style.display = 'block';
+            modalOverlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            const closeBtn = modal.querySelector('.modal-close');
+            if (closeBtn) {
+              closeBtn.onclick = closeModal;
+            }
+          }
+        }
+        
+        function closeModal() {
+          const modal = document.getElementById('modal');
+          const modalOverlay = document.getElementById('modalOverlay');
+          
+          if (modal && modalOverlay) {
+            modal.style.display = 'none';
+            modalOverlay.style.display = 'none';
+            document.body.style.overflow = '';
+          }
+        }
+        
+        function initializeTopupModal() {
+          let currentAmount = 10000;
+          let isIndividual = true;
+          
+          const amountDisplay = document.getElementById('amountDisplay');
+          const topupAmount = document.getElementById('topupAmount');
+          const minusBtn = document.getElementById('minusBtn');
+          const plusBtn = document.getElementById('plusBtn');
+          const individualBtn = document.getElementById('individualBtn');
+          const legalBtn = document.getElementById('legalBtn');
+          const payerName = document.getElementById('payerName');
+          const topupActionBtn = document.getElementById('topupActionBtn');
+          
+          function updateAmount() {
+            const formattedAmount = currentAmount.toLocaleString('ru-RU') + ' p';
+            amountDisplay.textContent = formattedAmount;
+            topupAmount.textContent = formattedAmount;
+          }
+          
+          function updateEntityType() {
+            if (isIndividual) {
+              individualBtn.classList.add('active');
+              legalBtn.classList.remove('active');
+              payerName.textContent = 'Иванов Иван Иванович';
+            } else {
+              legalBtn.classList.add('active');
+              individualBtn.classList.remove('active');
+              payerName.textContent = 'По счету';
+            }
+          }
+          
+          minusBtn.onclick = function() {
+            if (currentAmount > 1000) {
+              currentAmount -= 1000;
+              updateAmount();
+            }
+          };
+          
+          plusBtn.onclick = function() {
+            currentAmount += 1000;
+            updateAmount();
+          };
+          
+          individualBtn.onclick = function() {
+            isIndividual = true;
+            updateEntityType();
+          };
+          
+          legalBtn.onclick = function() {
+            isIndividual = false;
+            updateEntityType();
+          };
+          
+          topupActionBtn.onclick = function() {
+            alert(`Баланс пополнен на ${currentAmount.toLocaleString('ru-RU')} рублей (заглушка)`);
+            closeModal();
+          };
+          
+          updateAmount();
+          updateEntityType();
+        }
+
+        document.querySelectorAll('.sidebar-buttons button, .sidebar-market button').forEach(btn => {
+            btn.onclick = function() {
+                document.querySelectorAll('.sidebar-buttons button').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.sidebar-market button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const action = this.dataset.action;
+                if (action === 'stats') {
+                    window.location.href = 'blogger_stats.html';
+                } else if (action === 'partners') {
+                    window.location.href = 'blogger_partners.html';
+                } else if (action === 'notifications') {
+                    window.location.href = 'blogger_notifications.html';
+                } else if (action === 'contracts') {
+                    window.location.href = 'blogger_contracts.html';
+                } else if (action === 'settings') {
+                    window.location.href = 'blogger_settings.html';
+                            } else if (action === 'market') {
+              // Открываем модальное окно маркета
+              openModal(`
+                <div class="market-stub-modal">
+                  <button class="modal-close">&times;</button>
+                  <div class="market-stub-content">
+                    <div class="market-stub-icon">🛒</div>
+                    <h2>Маркет</h2>
+                    <p>Маркет пока в разработке! Скоро здесь появится возможность покупать товары и услуги.</p>
+                  </div>
+                </div>
+              `);
+            }
+            };
+        });
+
+         document.addEventListener('DOMContentLoaded', function() {
+           const modalOverlay = document.getElementById('modalOverlay');
+           if (modalOverlay) {
+             modalOverlay.onclick = function(e) {
+               if (e.target === modalOverlay) {
+                 closeModal();
+               }
+             };
+           }
+           
+           const currentPage = window.location.pathname.split('/').pop();
+           
+           if (currentPage === 'blogger_notifications_new.html') {
+             document.querySelector('[data-action="notifications"]').classList.add('active');
+           }
+         });
+
+         const bloggerProfileBlock = document.querySelector('.blogger-profile-block');
+         if (bloggerProfileBlock) {
+           bloggerProfileBlock.onclick = function() {
+             window.location.href = 'blogger_profile.html';
+           };
+         }
+
+         var topupBtn = document.getElementById('topupBtn');
+         if (topupBtn) {
+           topupBtn.onclick = function() {
+             openModal(`
+               <div class="topup-modal">
+                 <button class="modal-close">&times;</button>
+                 <div class="topup-modal-header">
+                   <h2>Пополнение баланса</h2>
+                 </div>
+                 <div class="topup-modal-content">
+                   <div class="topup-left-section">
+                     <div class="amount-controls">
+                       <button class="amount-btn minus-btn" id="minusBtn">-</button>
+                       <div class="amount-display" id="amountDisplay">10 000 p</div>
+                       <button class="amount-btn plus-btn" id="plusBtn">+</button>
+                     </div>
+                     
+                     <div class="entity-type-selection">
+                       <button class="entity-btn individual-btn active" id="individualBtn">Физ.лицо</button>
+                       <button class="entity-btn legal-btn" id="legalBtn">Юр.лицо</button>
+                     </div>
+                     
+                     <div class="payment-method-section">
+                       <label class="section-label">Способ оплаты</label>
+                       <button class="dropdown-btn" id="paymentMethodBtn">
+                         <span>Банковская карта</span>
+                         <span class="chevron">▼</span>
+                       </button>
+                     </div>
+                     
+                     <div class="payer-section">
+                       <label class="section-label">Плательщик</label>
+                       <button class="dropdown-btn" id="payerBtn">
+                         <span id="payerName">Иванов Иван Иванович</span>
+                         <span class="chevron">▼</span>
+                       </button>
+                     </div>
+                   </div>
+                   
+                   <div class="topup-right-section">
+                     <button class="topup-action-btn" id="topupActionBtn">
+                       <span>Пополнить</span>
+                       <span>счет</span>
+                       <span id="topupAmount">10 000 p</span>
+                     </button>
+                   </div>
+                 </div>
+               </div>
+             `);
+             
+             initializeTopupModal();
+           };
+         }
+    </script>
+</body>
+</html> 

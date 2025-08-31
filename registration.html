@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор роли</title>
+    <link rel="icon" type="image/png" href="assets/Group 2087325579.png">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Gotham Pro', 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1d24 0%, #2c2f33 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .registration-container {
+            background: linear-gradient(135deg, #23252b 0%, #2c2f33 100%);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border: 1px solid #36393f;
+            text-align: center;
+            max-width: 480px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .registration-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6ca0ff 0%, #5a8fd8 100%);
+        }
+
+        .logo-section {
+            margin-bottom: 32px;
+        }
+
+        .brand-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 24px;
+            filter: drop-shadow(0 4px 12px rgba(108, 160, 255, 0.3));
+        }
+
+        .welcome-title {
+            color: #ffffff;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-subtitle {
+            color: #a0a0a0;
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        .role-selection {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .role-btn {
+            background: linear-gradient(135deg, #36393f 0%, #2c2f33 100%);
+            border: 2px solid #444652;
+            border-radius: 16px;
+            padding: 20px 24px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .role-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(108, 160, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .role-btn:hover {
+            border-color: #6ca0ff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(108, 160, 255, 0.3);
+        }
+
+        .role-btn:hover::before {
+            left: 100%;
+        }
+
+        .role-btn:active {
+            transform: translateY(0);
+        }
+
+       
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #23252b 0%, #2c2f33 100%);
+            border-radius: 24px;
+            padding: 0;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+            border: 1px solid #36393f;
+            z-index: 1001;
+            display: none;
+            max-width: 480px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+       
+        #bloggerModal {
+            max-width: 600px;
+            max-height: 85vh;
+        }
+
+        #bloggerModal .modal-content {
+            padding: 24px;
+        }
+
+        #bloggerModal .form-group {
+            margin-bottom: 20px;
+        }
+
+        #bloggerModal .form-input {
+            font-size: 14px;
+            padding: 14px 16px;
+        }
+
+       
+        @media (max-width: 768px) {
+            #bloggerModal {
+                max-width: 95%;
+                max-height: 90vh;
+            }
+            
+            #bloggerModal .modal-content {
+                padding: 20px 16px;
+            }
+            
+            #bloggerModal .form-input {
+                font-size: 16px;
+                padding: 16px 18px;
+            }
+        }
+
+        .modal-content {
+            padding: 32px;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #36393f;
+        }
+
+        .modal-title {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .modal-subtitle {
+            color: #a0a0a0;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #36393f 0%, #2c2f33 100%);
+            border: 2px solid #444652;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #6ca0ff;
+            box-shadow: 0 0 0 3px rgba(108, 160, 255, 0.2);
+        }
+
+        .form-input::placeholder {
+            color: #808080;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #6ca0ff 0%, #5a8fd8 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 16px 24px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 16px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(108, 160, 255, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #a0a0a0;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: #ffffff;
+            background: rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 480px) {
+            .registration-container {
+                margin: 20px;
+                padding: 32px 24px;
+            }
+            
+            .brand-logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .welcome-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-container">
+        <div class="logo-section">
+            <img src="assets/Group 2087325579.png" alt="Логотип компании" class="brand-logo">
+            <h1 class="welcome-title">Добро пожаловать</h1>
+            <p class="welcome-subtitle">Выберите вашу роль в системе</p>
+        </div>
+        
+        <div class="role-selection">
+            <button class="role-btn" id="brandBtn">Бренд</button>
+            <button class="role-btn" id="bloggerBtn">Блогер</button>
+        </div>
+    </div>
+
+    
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal" id="brandModal">
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Регистрация бренда</h2>
+                <p class="modal-subtitle">Заполните данные для создания аккаунта</p>
+            </div>
+            
+            <form id="brandForm">
+                <div class="form-group">
+                    <label class="form-label">Контактный email</label>
+                    <input type="email" name="email" class="form-input" placeholder="example@company.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">ИНН</label>
+                    <input type="text" name="inn" class="form-input" placeholder="1234567890" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Дата регистрации</label>
+                    <input type="date" name="regdate" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Номер телефона</label>
+                    <input type="tel" name="phone" class="form-input" placeholder="+7 (999) 123-45-67" required>
+                </div>
+                
+                <button type="submit" class="submit-btn">Создать аккаунт</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <div class="modal" id="bloggerModal">
+        <button class="close-btn" onclick="closeBloggerModal()">&times;</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Регистрация блогера</h2>
+                <p class="modal-subtitle">Заполните данные для создания аккаунта</p>
+            </div>
+            
+            <form id="bloggerForm">
+               
+                <div class="form-group">
+                    <label class="form-label">Имя и фамилия</label>
+                    <input type="text" name="fullName" class="form-input" placeholder="Александр Рогов" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-input" placeholder="alexander.rogov@example.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Телефон</label>
+                    <input type="tel" name="phone" class="form-input" placeholder="+7 (999) 123-45-67" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Специализация</label>
+                    <select name="specialization" class="form-input" required>
+                        <option value="">Выберите специализацию</option>
+                        <option value="fashion">Мода</option>
+                        <option value="beauty">Красота</option>
+                        <option value="lifestyle">Лайфстайл</option>
+                        <option value="tech">Технологии</option>
+                        <option value="food">Еда</option>
+                        <option value="travel">Путешествия</option>
+                    </select>
+                </div>
+                
+               
+                <div class="form-group">
+                    <label class="form-label">Тип регистрации</label>
+                    <select name="registrationType" class="form-input" required>
+                        <option value="">Выберите тип</option>
+                        <option value="ip">ИП</option>
+                        <option value="ooo">ООО</option>
+                        <option value="selfemployed">Самозанятый</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">ИНН</label>
+                    <input type="text" name="inn" class="form-input" placeholder="123456789012" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Дата регистрации</label>
+                    <input type="date" name="regDate" class="form-input" required>
+                </div>
+                
+               
+                <div class="form-group">
+                    <label class="form-label">ВКонтакте <span style="color: #a0a0a0; font-size: 12px;">(необязательно)</span></label>
+                    <input type="text" name="vk" class="form-input" placeholder="vk.com/username">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Instagram <span style="color: #a0a0a0; font-size: 12px;">(необязательно)</span></label>
+                    <input type="text" name="instagram" class="form-input" placeholder="instagram.com/username">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">YouTube <span style="color: #a0a0a0; font-size: 12px;">(необязательно)</span></label>
+                    <input type="text" name="youtube" class="form-input" placeholder="youtube.com/@username">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Telegram <span style="color: #a0a0a0; font-size: 12px;">(необязательно)</span></label>
+                    <input type="text" name="telegram" class="form-input" placeholder="t.me/username">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">TikTok <span style="color: #a0a0a0; font-size:12px;">(необязательно)</span></label>
+                    <input type="text" name="tiktok" class="form-input" placeholder="tiktok.com/@username">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">RuTube <span style="color: #a0a0a0; font-size: 12px;">(необязательно)</span></label>
+                    <input type="text" name="rutube" class="form-input" placeholder="rutube.ru/channel/username">
+                </div>
+                
+                <button type="submit" class="submit-btn">Создать аккаунт</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/registration.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const brandBtn = document.getElementById('brandBtn');
+        const bloggerBtn = document.getElementById('bloggerBtn');
+        const brandModal = document.getElementById('brandModal');
+        const bloggerModal = document.getElementById('bloggerModal');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const brandForm = document.getElementById('brandForm');
+        const bloggerForm = document.getElementById('bloggerForm');
+
+
+        brandBtn.onclick = function() {
+            brandModal.style.display = 'block';
+            modalOverlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        };
+
+      
+        bloggerBtn.onclick = function() {
+            bloggerModal.style.display = 'block';
+            modalOverlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        };
+
+      
+        function closeModal() {
+            brandModal.style.display = 'none';
+            modalOverlay.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+       
+        function closeBloggerModal() {
+            bloggerModal.style.display = 'none';
+            modalOverlay.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        
+        modalOverlay.onclick = function() {
+            closeModal();
+            closeBloggerModal();
+        };
+
+       
+        brandForm.onsubmit = function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(brandForm);
+            const data = {
+                email: formData.get('email'),
+                inn: formData.get('inn'),
+                regdate: formData.get('regdate'),
+                phone: formData.get('phone')
+            };
+            
+            
+            localStorage.setItem('brandData', JSON.stringify(data));
+            
+            
+            window.location.href = 'brand_index.html';
+        };
+
+       
+        bloggerForm.onsubmit = function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(bloggerForm);
+            const data = {
+                fullName: formData.get('fullName'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                specialization: formData.get('specialization'),
+                registrationType: formData.get('registrationType'),
+                inn: formData.get('inn'),
+                regDate: formData.get('regDate'),
+                vk: formData.get('vk'),
+                instagram: formData.get('instagram'),
+                youtube: formData.get('youtube'),
+                telegram: formData.get('telegram'),
+                tiktok: formData.get('tiktok'),
+                rutube: formData.get('rutube')
+            };
+            
+            
+            localStorage.setItem('bloggerData', JSON.stringify(data));
+            
+            
+            window.location.href = 'blogger_profile.html';
+        };
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройки блогера</title>
+    <link rel="icon" type="image/png" href="assets/Group 2087325579.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/tooltips.css">
+    <style>
+        body {
+            background: #fff;
+            margin: 0;
+            font-family: 'Gotham Pro', 'Montserrat', Arial, sans-serif;
+            color: #23252b;
+        }
+
+        .blogger-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .blogger-sidebar {
+            width: 320px;
+            background: #484b54;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blogger-logo {
+            font-size: 44px;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: -2px;
+            position: relative;
+            margin-bottom: 32px;
+        }
+
+        .blogger-logo::after {
+            content: '';
+            display: block;
+            width: 7px;
+            height: 7px;
+            background: #ff8c8c;
+            border-radius: 50%;
+            position: absolute;
+            right: -8px;
+            top: 8px;
+        }
+
+        .blogger-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .blogger-nav-btn {
+            background: #ff8c8c;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .blogger-nav-btn:hover {
+            background: #ff6c6c;
+            transform: translateX(4px);
+        }
+
+        .blogger-nav-btn.active {
+            background: #6ca0ff;
+        }
+
+        .blogger-main {
+            flex: 1;
+            background: rgb(248, 245, 240) !important;
+            padding: 40px;
+        }
+
+        .blogger-header {
+            margin-bottom: 40px;
+        }
+
+        .blogger-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #23252b;
+            margin: 0 0 8px 0;
+        }
+
+        .blogger-header p {
+            color: #666;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        
+        .settings-section {
+            background: rgb(255, 254, 250) !important;
+            border: 1px solid #e0e0e0;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .settings-section h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #23252b;
+            margin: 0 0 20px 0;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .setting-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .setting-item label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #23252b;
+        }
+
+        .setting-item input,
+        .setting-item select,
+        .setting-item textarea {
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            background: rgb(255, 254, 250) !important;
+        }
+
+        .setting-item input:focus,
+        .setting-item select:focus,
+        .setting-item textarea:focus {
+            outline: none;
+            border-color: #ff8c8c;
+        }
+
+        .setting-item textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #ff8c8c;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .toggle-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: #23252b;
+        }
+
+        
+        .settings-actions {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(255, 140, 140, 0.3);
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 140, 140, 0.4);
+        }
+
+        .cancel-btn {
+            background: #f0f0f0;
+            color: #666;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cancel-btn:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+
+
+        
+        .logout-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        .logout-btn:hover {
+            background: linear-gradient(135deg, #ee5a52 0%, #ff6b6b 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .logout-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+        }
+
+        
+        .security-contacts,
+        .password-change-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .security-contacts h4,
+        .password-change-section h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #23252b;
+            margin: 0 0 16px 0;
+        }
+
+        .change-password-btn {
+            background: linear-gradient(135deg, #6ca0ff 0%, #5a8fd8 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(108, 160, 255, 0.3);
+        }
+
+        .change-password-btn:hover {
+            background: linear-gradient(135deg, #5a8fd8 0%, #6ca0ff 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 160, 255, 0.4);
+        }
+
+        .change-password-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(108, 160, 255, 0.3);
+        }
+
+        
+        #passwordModal {
+            max-width: 500px;
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgb(255, 254, 250) !important;
+            border-radius: 24px;
+            padding: 0;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+            border: 1px solid #e0e0e0;
+            z-index: 1001;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        #passwordModal .modal-content {
+            padding: 32px;
+        }
+
+        #passwordModal .modal-header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #36393f;
+        }
+
+        #passwordModal .modal-title {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        #passwordModal .modal-subtitle {
+            color: #a0a0a0;
+            font-size: 14px;
+        }
+
+        #passwordModal .form-group {
+            margin-bottom: 24px;
+        }
+
+        #passwordModal .form-label {
+            display: block;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        #passwordModal .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgb(255, 254, 250) !important;
+            border: 2px solid #444652;
+            border-radius: 12px;
+            color: #23252b;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        #passwordModal .form-input:focus {
+            outline: none;
+            border-color: #6ca0ff;
+            box-shadow: 0 0 0 3px rgba(108, 160, 255, 0.2);
+        }
+
+        #passwordModal .form-input::placeholder {
+            color: #808080;
+        }
+
+        .password-requirements {
+            background: rgb(255, 254, 250) !important;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+            border-left: 4px solid #6ca0ff;
+            border: 1px solid rgba(108, 160, 255, 0.2);
+        }
+
+        .password-requirements h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 0 0 16px 0;
+        }
+
+        .password-requirements ul {
+            margin: 0;
+            padding-left: 20px;
+            list-style: none;
+        }
+
+        .password-requirements li {
+            font-size: 13px;
+            color: #b0b0b0;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .password-requirements li:before {
+            content: '✓';
+            color: #6ca0ff;
+            font-weight: bold;
+            position: absolute;
+            left: -20px;
+        }
+
+        .password-requirements li:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .form-actions .submit-btn {
+            flex: 1;
+            background: linear-gradient(135deg, #6ca0ff 0%, #5a8fd8 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-actions .submit-btn:hover {
+            background: linear-gradient(135deg, #5a8fd8 0%, #6ca0ff 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(108, 160, 255, 0.4);
+        }
+
+        .form-actions .cancel-btn {
+            flex: 1;
+            background: #f0f0f0;
+            color: #666;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-actions .cancel-btn:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        
+        .verify-btn {
+            background: #4CAF50 !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 6px !important;
+            padding: 8px 12px !important;
+            font-size: 12px !important;
+            cursor: pointer !important;
+            white-space: nowrap !important;
+            transition: all 0.3s ease !important;
+            font-weight: 500 !important;
+            min-width: 80px !important;
+        }
+
+        .verify-btn:hover:not(:disabled) {
+            background: #45a049 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3) !important;
+        }
+
+        .verify-btn:disabled {
+            cursor: default !important;
+            opacity: 0.8 !important;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #a0a0a0;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: #ffffff;
+            background: rgba(255,255,255,0.1);
+        }
+
+        
+        .logo-container {
+          display: flex;
+          justify-content: flex-start;
+          width: 100%;
+          margin-left: 10%;
+        }
+
+        .logo-spacer {
+          flex: 1;
+        }
+
+        .center-spacer {
+          flex: 1;
+        }
+
+        
+        .custom-balance-container {
+          background: none;
+          border-radius: 0;
+          padding: 0;
+          margin-bottom: 16px;
+          width: 280px;
+          max-width: 280px;
+          box-shadow: none;
+          box-sizing: border-box;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .custom-balance-title {
+          font-size: 14px;
+          color: #fff;
+          text-align: left;
+          margin: 0 0 8px 0;
+          font-weight: 500;
+          letter-spacing: 0.01em;
+        }
+
+        .custom-balance-card {
+          background: #fff;
+          border-radius: 8px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 12px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+          width: 100%;
+          min-width: 0;
+          max-width: 100%;
+          box-sizing: border-box;
+        }
+
+        .custom-balance-amount {
+          font-size: 20px;
+          font-weight: 700;
+          color: #23252b;
+          margin: 0;
+          padding: 0;
+          background: transparent;
+          border-radius: 0;
+          text-align: center;
+        }
+
+        .custom-balance-button {
+          background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%);
+          color: #fff;
+          border: none;
+          border-radius: 8px;
+          padding: 10px 0;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          width: 100%;
+          transition: all 0.3s ease;
+          margin-top: 8px;
+          box-shadow: 0 2px 8px rgba(255, 140, 140, 0.3);
+        }
+
+        .custom-balance-button:hover {
+          background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(255, 140, 140, 0.4);
+        }
+
+       
+        .blogger-profile-block {
+          display: block !important;
+          width: 280px !important;
+          max-width: 280px !important;
+          margin: 0 auto 24px auto !important;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-sizing: border-box !important;
+        }
+
+        .blogger-profile-block:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .blogger-avatar-small {
+          background: #fff;
+          border-radius: 16px;
+          padding: 40px;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          transition: all 0.3s ease;
+          width: 280px !important;
+          max-width: 280px !important;
+          margin: 0 auto !important;
+          box-sizing: border-box !important;
+        }
+
+        .blogger-avatar-small:hover {
+          box-shadow: 0 8px 24px rgba(255, 140, 140, 0.2);
+          transform: scale(1.02);
+        }
+
+        .blogger-icon {
+          font-size: 28px !important;
+          color: #ff8c8c !important;
+          background: rgba(255, 140, 140, 0.1) !important;
+          border-radius: 50% !important;
+          width: 56px !important;
+          height: 56px !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          transition: all 0.3s ease !important;
+        }
+
+        .blogger-avatar-small:hover .blogger-icon {
+          background: #ff8c8c;
+          color: #fff;
+          transform: scale(1.1);
+        }
+
+        .blogger-avatar-img {
+          width: 56px !important;
+          height: 56px !important;
+          border-radius: 12px !important;
+          object-fit: cover !important;
+          border: 2px solid #ff8c8c !important;
+          transition: all 0.3s ease !important;
+        }
+
+        
+        .sidebar-buttons button {
+          width: 280px !important;
+          max-width: 280px !important;
+          background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%) !important;
+          color: #fff !important;
+          border: none !important;
+          border-radius: 16px !important;
+          font-size: 20px !important;
+          font-weight: 600 !important;
+          padding: 14px 0 !important;
+          cursor: pointer !important;
+          margin: 0 auto 8px auto !important;
+          transition: all 0.3s ease !important;
+          box-shadow: 0 4px 12px rgba(255, 140, 140, 0.3) !important;
+          text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+          position: relative !important;
+          overflow: hidden !important;
+          box-sizing: border-box !important;
+        }
+
+                 .sidebar-buttons button:hover {
+           background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%) !important;
+           box-shadow: 0 6px 16px rgba(255, 140, 140, 0.4) !important;
+           transform: translateY(-2px) scale(1.05) !important;
+         }
+
+         .sidebar-buttons button.active {
+           background: linear-gradient(135deg, #6ca0ff 0%, #5a8fd8 100%) !important;
+           box-shadow: 0 4px 12px rgba(108, 160, 255, 0.4) !important;
+         }
+
+         .sidebar-buttons button.active:hover {
+           background: linear-gradient(135deg, #5a8fd8 0%, #6ca0ff 100%) !important;
+           box-shadow: 0 6px 16px rgba(108, 160, 255, 0.5) !important;
+         }
+
+       
+        .sidebar-market button {
+          width: 280px !important;
+          max-width: 280px !important;
+          background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%) !important;
+          color: #fff !important;
+          border: none !important;
+          border-radius: 12px !important;
+          padding: 16px 20px !important;
+          font-size: 16px !important;
+          font-weight: 600 !important;
+          cursor: pointer !important;
+          transition: all 0.3s ease !important;
+          box-shadow: 0 4px 12px rgba(255, 140, 140, 0.3) !important;
+          text-align: center !important;
+          position: relative !important;
+          overflow: hidden !important;
+          box-sizing: border-box !important;
+        }
+
+                 .sidebar-market button:hover {
+           background: linear-gradient(135deg, #ff6c6c 0%, #ff8c8c 100%) !important;
+           box-shadow: 0 6px 16px rgba(255, 140, 140, 0.4) !important;
+           transform: translateY(-2px) scale(1.05) !important;
+         }
+
+         .sidebar-market button.active {
+           background: linear-gradient(135deg, #6ca0ff 0%, #5a8fd8 100%) !important;
+           box-shadow: 0 4px 12px rgba(108, 160, 255, 0.4) !important;
+         }
+
+         .sidebar-market button.active:hover {
+           background: linear-gradient(135deg, #5a8fd8 0%, #6ca0ff 100%) !important;
+           box-shadow: 0 6px 16px rgba(108, 160, 255, 0.5) !important;
+         }
+
+        
+        @media (max-width: 768px) {
+           
+            .app {
+              flex-direction: column !important;
+            }
+
+           
+            .sidebar {
+              position: relative !important;
+              width: 100% !important;
+              min-width: 100% !important;
+              max-width: 100% !important;
+              height: auto !important;
+              min-height: auto !important;
+              flex-direction: row !important;
+              flex-wrap: wrap !important;
+              padding: 16px !important;
+              gap: 16px !important;
+            }
+
+           
+            .sidebar-header {
+              flex-direction: row !important;
+              width: 100% !important;
+              justify-content: space-between !important;
+              align-items: center !important;
+              margin-bottom: 0 !important;
+            }
+
+           
+            .logo-container {
+              margin-left: 0 !important;
+              width: auto !important;
+            }
+
+            .company-logo {
+              width: 60px !important;
+              height: 60px !important;
+              margin: 0 !important;
+            }
+
+           
+            .blogger-profile-block {
+              width: auto !important;
+              max-width: none !important;
+              margin: 0 !important;
+              flex: 1 !important;
+              display: flex !important;
+              justify-content: center !important;
+            }
+
+            .blogger-avatar-small {
+              width: auto !important;
+              max-width: none !important;
+              margin: 0 !important;
+              padding: 12px !important;
+            }
+
+            .blogger-avatar-img {
+              width: 40px !important;
+              height: 40px !important;
+            }
+
+            .blogger-icon {
+              width: 40px !important;
+              height: 40px !important;
+              font-size: 20px !important;
+            }
+
+           
+            .custom-balance-container {
+              width: auto !important;
+              max-width: none !important;
+              margin: 0 !important;
+            }
+
+            .custom-balance-card {
+              padding: 8px 12px !important;
+            }
+
+            .custom-balance-amount {
+              font-size: 16px !important;
+            }
+
+            .custom-balance-button {
+              font-size: 12px !important;
+              padding: 8px 0 !important;
+            }
+
+           
+            .sidebar-buttons {
+              width: 100% !important;
+              display: flex !important;
+              flex-direction: row !important;
+              flex-wrap: wrap !important;
+              gap: 8px !important;
+              justify-content: center !important;
+              margin: 0 !important;
+            }
+
+            .sidebar-buttons button {
+              width: auto !important;
+              max-width: none !important;
+              flex: 1 !important;
+              min-width: 120px !important;
+              font-size: 14px !important;
+              padding: 10px 8px !important;
+              margin: 0 !important;
+            }
+
+            
+            .sidebar-market {
+              margin: 0 !important;
+              padding: 0 !important;
+              width: auto !important;
+              flex: 1 !important;
+              min-width: 120px !important;
+            }
+
+            .sidebar-market button {
+              width: 100% !important;
+              max-width: none !important;
+              font-size: 14px !important;
+              padding: 10px 8px !important;
+              margin: 0 !important;
+            }
+
+           
+            .main {
+              margin-left: 0 !important;
+              width: 100% !important;
+              padding: 16px !important;
+              background: rgb(253, 252, 250) !important;
+              border-radius: 0 !important;
+              margin-top: 0 !important;
+            }
+
+            .main-header {
+              background: rgb(248, 245, 240) !important;
+              border-radius: 16px !important;
+              padding: 20px !important;
+              margin-bottom: 20px !important;
+              box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+              border: 1px solid #e5e5e5 !important;
+              text-align: center !important;
+            }
+
+            .main-header h1 {
+              font-size: 24px !important;
+              color: #23252b !important;
+              margin: 0 0 16px 0 !important;
+              text-align: center !important;
+              font-weight: 700 !important;
+            }
+
+           
+            .settings-section {
+              margin-bottom: 24px !important;
+            }
+
+            .settings-section h3 {
+              font-size: 18px !important;
+              margin-bottom: 16px !important;
+            }
+
+            .settings-grid {
+              grid-template-columns: 1fr !important;
+              gap: 16px !important;
+            }
+
+            .setting-item {
+              margin-bottom: 16px !important;
+            }
+
+            .setting-item label {
+              font-size: 14px !important;
+              margin-bottom: 8px !important;
+            }
+
+            .setting-item input,
+            .setting-item select {
+              font-size: 14px !important;
+              padding: 12px !important;
+              border-radius: 8px !important;
+            }
+
+            .settings-actions {
+              flex-direction: column !important;
+              gap: 12px !important;
+            }
+
+            .settings-actions button {
+                width: 100% !important;
+                font-size: 14px !important;
+                padding: 12px 16px !important;
+                border-radius: 8px !important;
+            }
+
+            
+            .security-contacts .verify-btn {
+              font-size: 12px !important;
+              padding: 8px 10px !important;
+              min-width: 75px !important;
+            }
+
+            
+            .logout-section {
+                margin-top: 20px !important;
+                padding-top: 20px !important;
+            }
+
+            .logout-btn {
+                font-size: 14px !important;
+                padding: 12px 16px !important;
+                max-width: 100% !important;
+            }
+
+            
+            .security-contacts h4,
+            .password-change-section h4 {
+              font-size: 14px !important;
+              margin-bottom: 12px !important;
+            }
+
+            .change-password-btn {
+              font-size: 13px !important;
+              padding: 12px 20px !important;
+            }
+
+            .password-requirements {
+              padding: 12px !important;
+              margin: 16px 0 !important;
+            }
+
+            .password-requirements h4 {
+              font-size: 13px !important;
+              margin-bottom: 10px !important;
+            }
+
+            .password-requirements li {
+              font-size: 12px !important;
+              margin-bottom: 4px !important;
+            }
+
+            .form-actions {
+              flex-direction: column !important;
+              gap: 8px !important;
+            }
+
+            
+            #passwordModal {
+              max-width: 95% !important;
+              margin: 20px !important;
+            }
+
+            #passwordModal .modal-content {
+              padding: 24px 20px !important;
+            }
+
+            #passwordModal .modal-header {
+              margin-bottom: 24px !important;
+              padding-bottom: 20px !important;
+            }
+
+            #passwordModal .modal-title {
+              font-size: 20px !important;
+            }
+
+            #passwordModal .modal-subtitle {
+              font-size: 13px !important;
+            }
+
+            #passwordModal .form-input {
+              font-size: 16px !important;
+              padding: 14px 16px !important;
+            }
+
+            .password-requirements {
+              padding: 16px !important;
+              margin: 20px 0 !important;
+            }
+
+            .password-requirements h4 {
+              font-size: 13px !important;
+              margin-bottom: 12px !important;
+            }
+
+            .password-requirements li {
+              font-size: 12px !important;
+              margin-bottom: 6px !important;
+            }
+
+            .form-actions .submit-btn,
+            .form-actions .cancel-btn {
+              font-size: 14px !important;
+              padding: 14px 20px !important;
+            }
+
+            
+            .verify-btn {
+              font-size: 12px !important;
+              padding: 8px 10px !important;
+              min-width: 75px !important;
+            }
+        }
+
+        
+        @media (max-width: 480px) {
+          .sidebar {
+            padding: 12px !important;
+            gap: 12px !important;
+          }
+
+          .blogger-avatar-img {
+            width: 35px !important;
+            height: 35px !important;
+          }
+
+          .blogger-icon {
+            width: 35px !important;
+            height: 35px !important;
+            font-size: 18px !important;
+          }
+
+          .custom-balance-amount {
+            font-size: 14px !important;
+          }
+
+          .custom-balance-button {
+            font-size: 11px !important;
+            padding: 6px 0 !important;
+          }
+
+          .sidebar-buttons button,
+          .sidebar-market button {
+            font-size: 12px !important;
+            padding: 8px 6px !important;
+            min-width: 100px !important;
+          }
+
+          
+          .settings-section h3 {
+            font-size: 16px !important;
+            margin-bottom: 12px !important;
+          }
+
+          .setting-item label {
+            font-size: 12px !important;
+            margin-bottom: 6px !important;
+          }
+
+          .setting-item input,
+          .setting-item select {
+            font-size: 12px !important;
+            padding: 10px !important;
+          }
+
+          .settings-actions button {
+            font-size: 12px !important;
+            padding: 10px 12px !important;
+          }
+
+          
+          #passwordModal {
+            max-width: 98% !important;
+            margin: 10px !important;
+          }
+
+          #passwordModal .modal-content {
+            padding: 20px 16px !important;
+          }
+
+          #passwordModal .modal-title {
+            font-size: 18px !important;
+          }
+
+          #passwordModal .modal-subtitle {
+            font-size: 12px !important;
+          }
+
+          #passwordModal .form-input {
+            font-size: 14px !important;
+            padding: 12px 14px !important;
+          }
+
+          .password-requirements {
+            padding: 12px !important;
+            margin: 16px 0 !important;
+          }
+
+          .password-requirements h4 {
+            font-size: 12px !important;
+            margin-bottom: 10px !important;
+          }
+
+          .password-requirements li {
+            font-size: 11px !important;
+            margin-bottom: 4px !important;
+          }
+
+                      .form-actions .submit-btn,
+            .form-actions .cancel-btn {
+              font-size: 12px !important;
+              padding: 12px 16px !important;
+            }
+
+            
+            .verify-btn {
+              font-size: 11px !important;
+              padding: 6px 8px !important;
+              min-width: 70px !important;
+            }
+
+            
+            .security-contacts .verify-btn {
+              font-size: 11px !important;
+              padding: 6px 8px !important;
+              min-width: 70px !important;
+            }
+
+            
+          .logout-btn {
+            font-size: 12px !important;
+            padding: 10px 12px !important;
+          }
+        }
+    </style>
+</head>
+<body class="blogger-page blogger-settings-page">
+  <div class="container">
+    <div class="app">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-container">
+            <img src="assets/Group 2087325579.png" alt="Логотип компании" class="company-logo" style="width:80px;height:80px;object-fit:contain;margin-bottom:20px;margin-top:20px;" />
+            <div class="logo-spacer"></div>
+          </div>
+          <div class="blogger-profile-block" onclick="window.location.href='blogger_profile.html';">
+            <div class="blogger-avatar-small">
+              <img src="assets/rogov.png" alt="Александр Рогов" class="blogger-avatar-img">
+              <div class="center-spacer"></div>
+              <div class="blogger-icon">👔</div>
+            </div>
+          </div>
+          <div class="custom-balance-container">
+            <div class="custom-balance-title">Баланс</div>
+            <div class="custom-balance-card">
+              <div class="custom-balance-amount" id="balanceValue">1000 р</div>
+              <button class="custom-balance-button" id="withdrawBtn">Вывести</button>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-buttons">
+          <button data-action="stats">Статистика</button>
+          <button data-action="partners">Партнеры</button>
+          <button data-action="notifications">Уведомления</button>
+          <button data-action="contracts">Контракты</button>
+          <button data-action="settings">Настройки</button>
+        </div>
+        <div class="sidebar-market">
+          <button data-action="market">Маркет</button>
+        </div>
+      </aside>
+        
+        <main class="main" style="background: rgb(248, 245, 240) !important;">
+            <div class="main-header" style="background: rgb(248, 245, 240) !important;">
+                <h1 class="page-title-with-tooltip">
+                    Настройки
+                    <div class="tooltip-icon" id="settingsTooltip">
+                        ?
+                        <div class="tooltip-content">Настройте свой профиль, уведомления, безопасность и интерфейс</div>
+                    </div>
+                </h1>
+                <p>Управляйте своим профилем и настройками аккаунта</p>
+            </div>
+            
+           
+            <div class="settings-section" style="background: rgb(255, 254, 250) !important;">
+                <h3>Основная информация</h3>
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label>Имя и фамилия</label>
+                        <input type="text" name="fullName" value="Александр Рогов" placeholder="Введите имя и фамилию">
+                    </div>
+                    <div class="setting-item">
+                        <label>Email</label>
+                        <input type="email" name="email" value="alexander.rogov@example.com" placeholder="Введите email">
+                    </div>
+                    <div class="setting-item">
+                        <label>Телефон</label>
+                        <input type="tel" name="phone" value="+7 (999) 123-45-67" placeholder="Введите телефон">
+                    </div>
+                    <div class="setting-item">
+                        <label>Специализация</label>
+                        <select name="specialization">
+                            <option value="fashion" selected>Мода</option>
+                            <option value="beauty">Красота</option>
+                            <option value="lifestyle">Лайфстайл</option>
+                            <option value="tech">Технологии</option>
+                            <option value="food">Еда</option>
+                            <option value="travel">Путешествия</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+           
+            <div class="settings-section">
+                <h3>Юридическая информация</h3>
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label>Тип регистрации</label>
+                        <select name="registrationType">
+                            <option value="ip" selected>ИП</option>
+                            <option value="ooo">ООО</option>
+                            <option value="selfemployed">Самозанятый</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>ИНН</label>
+                        <input type="text" name="inn" value="123456789012" placeholder="Введите ИНН">
+                    </div>
+                    <div class="setting-item">
+                        <label>Дата регистрации</label>
+                        <input type="date" name="regDate" value="2023-01-15">
+                    </div>
+                </div>
+            </div>
+            
+           
+            <div class="settings-section">
+                <h3>Социальные сети <span style="color: #666; font-size: 14px; font-weight: 400;">(нажмите "Подтвердить" для верификации)</span></h3>
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label>ВКонтакте</label>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <input type="text" name="vk" value="vk.com/alexander_rogov" placeholder="Ссылка на профиль" style="flex: 1;">
+                            <button type="button" class="verify-btn" onclick="verifySocialNetwork('vk')">Подтвердить</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label>Instagram</label>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <input type="text" name="instagram" value="instagram.com/alexander_rogov" placeholder="Ссылка на профиль" style="flex: 1;">
+                            <button type="button" class="verify-btn" onclick="verifySocialNetwork('instagram')">Подтвердить</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label>YouTube</label>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <input type="text" name="youtube" value="youtube.com/@alexander_rogov" placeholder="Ссылка на канал" style="flex: 1;">
+                            <button type="button" class="verify-btn" onclick="verifySocialNetwork('youtube')">Подтвердить</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label>Telegram</label>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <input type="text" name="telegram" value="t.me/alexander_rogov" placeholder="Ссылка на канал" style="flex: 1;">
+                            <button type="button" class="verify-btn" onclick="verifySocialNetwork('telegram')">Подтвердить</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label>TikTok</label>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <input type="text" name="tiktok" value="tiktok.com/@alexander_rogov" placeholder="Ссылка на профиль" style="flex: 1;">
+                            <button type="button" class="verify-btn" onclick="verifySocialNetwork('tiktok')">Подтвердить</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label>RuTube</label>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <input type="text" name="rutube" value="rutube.ru/channel/alexander_rogov" placeholder="Ссылка на профиль" style="flex: 1;">
+                            <button type="button" class="verify-btn" onclick="verifySocialNetwork('rutube')">Подтвердить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+           
+            <div class="settings-section">
+                <h3>Настройки уведомлений</h3>
+                <div class="toggle-label">
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-text">Email уведомления</span>
+                </div>
+                <div class="toggle-label">
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-text">Push уведомления</span>
+                </div>
+                <div class="toggle-label">
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-text">SMS уведомления</span>
+                </div>
+                <div class="toggle-label">
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-text">Уведомления о новых предложениях</span>
+                </div>
+                <div class="toggle-label">
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-text">Уведомления о статистике</span>
+                </div>
+            </div>
+            
+           
+            <div class="settings-section">
+                <h3>Настройки интерфейса</h3>
+                <div class="toggle-label">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="tooltipsToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-text">Показывать подсказки на страницах</span>
+                </div>
+                <p style="color: #666; font-size: 14px; margin-top: 8px;">Подсказки помогают понять назначение каждой страницы и функции</p>
+            </div>
+            
+           
+            <div class="settings-section">
+                <h3>Безопасность</h3>
+                
+                
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label>Двухфакторная аутентификация</label>
+                        <select name="twoFactorAuth">
+                            <option value="disabled">Отключена</option>
+                            <option value="sms">SMS</option>
+                            <option value="email">Email</option>
+                            <option value="app">Приложение</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>Уведомления о входе</label>
+                        <select name="loginNotifications">
+                            <option value="enabled" selected>Включены</option>
+                            <option value="disabled">Отключены</option>
+                        </select>
+                    </div>
+                </div>
+
+               
+                <div class="security-contacts">
+                    <h4>Резервные контакты</h4>
+                    <div class="settings-grid">
+                        <div class="setting-item">
+                            <label>Резервный email</label>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <input type="email" name="backupEmail" placeholder="backup@example.com" style="flex: 1;">
+                                <button type="button" class="verify-btn" onclick="verifyBackupContact('email')">Подтвердить</button>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <label>Резервный телефон</label>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <input type="tel" name="backupPhone" placeholder="+7 (999) 987-65-43" style="flex: 1;">
+                                <button type="button" class="verify-btn" onclick="verifyBackupContact('phone')">Подтвердить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               
+                <div class="password-change-section">
+                    <h4>Смена пароля</h4>
+                    <button class="change-password-btn" onclick="showPasswordChangeModal()">Изменить пароль</button>
+                </div>
+                
+                
+                <div class="settings-actions">
+                    <button class="save-btn" onclick="saveSettings()">Сохранить изменения</button>
+                    <button class="cancel-btn" onclick="resetSettings()">Отменить</button>
+                    <button class="logout-btn" onclick="logoutAccount()">Выйти из аккаунта</button>
+                </div>
+            </div>
+        </main>
+    </div>
+  </div>
+
+  
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="modal" id="modal"></div>
+
+  
+  <div class="modal" id="passwordModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closePasswordModal()">&times;</button>
+      <div class="modal-header">
+        <h2 class="modal-title">Смена пароля</h2>
+        <p class="modal-subtitle">Введите текущий пароль и новый пароль для изменения</p>
+      </div>
+      
+      <form id="passwordForm">
+        <div class="form-group">
+          <label class="form-label">Текущий пароль</label>
+          <input type="password" name="currentPassword" class="form-input" placeholder="Введите текущий пароль" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Новый пароль</label>
+          <input type="password" name="newPassword" class="form-input" placeholder="Введите новый пароль" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Подтвердите новый пароль</label>
+          <input type="password" name="confirmPassword" class="form-input" placeholder="Подтвердите новый пароль" required>
+        </div>
+        
+        <div class="password-requirements">
+          <h4>Требования к паролю:</h4>
+          <ul>
+            <li>Минимум 8 символов</li>
+            <li>Хотя бы одна заглавная буква</li>
+            <li>Хотя бы одна цифра</li>
+            <li>Хотя бы один специальный символ</li>
+          </ul>
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="submit-btn">Изменить пароль</button>
+          <button type="button" class="cancel-btn" onclick="closePasswordModal()">Отмена</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+    <script>
+        function saveSettings() {
+            
+            const formData = {
+                fullName: document.querySelector('input[name="fullName"]').value,
+                email: document.querySelector('input[name="email"]').value,
+                phone: document.querySelector('input[name="phone"]').value,
+                specialization: document.querySelector('select[name="specialization"]').value,
+                registrationType: document.querySelector('select[name="registrationType"]').value,
+                inn: document.querySelector('input[name="inn"]').value,
+                regDate: document.querySelector('input[name="regDate"]').value,
+                vk: document.querySelector('input[name="vk"]').value,
+                instagram: document.querySelector('input[name="instagram"]').value,
+                youtube: document.querySelector('input[name="youtube"]').value,
+                telegram: document.querySelector('input[name="telegram"]').value,
+                tiktok: document.querySelector('input[name="tiktok"]').value,
+                rutube: document.querySelector('input[name="rutube"]').value,
+                twoFactorAuth: document.querySelector('select[name="twoFactorAuth"]').value,
+                loginNotifications: document.querySelector('select[name="loginNotifications"]').value,
+                backupEmail: document.querySelector('input[name="backupEmail"]').value,
+                backupPhone: document.querySelector('input[name="backupPhone"]').value
+            };
+            
+            
+            localStorage.setItem('bloggerData', JSON.stringify(formData));
+            
+            
+            console.log('Сохранение настроек...', formData);
+            alert('Настройки успешно сохранены!');
+        }
+
+        function resetSettings() {
+              
+            console.log('Сброс настроек...');
+            if (confirm('Вы уверены, что хотите отменить изменения? Все несохраненные изменения будут потеряны.')) {
+                
+                loadBloggerData();
+                alert('Настройки восстановлены!');
+            }
+        }
+
+        function logoutAccount() {
+            
+            if (confirm('Вы уверены, что хотите выйти из аккаунта?')) {
+                
+                console.log('Выход из аккаунта...');
+                
+                
+                localStorage.clear();
+                sessionStorage.clear();
+                
+                
+                window.location.href = 'registration.html';
+            }
+        }
+
+        function showPasswordChangeModal() {
+            const passwordModal = document.getElementById('passwordModal');
+            
+            if (passwordModal) {
+                
+                passwordModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closePasswordModal() {
+            const passwordModal = document.getElementById('passwordModal');
+            
+            if (passwordModal) {
+                
+                passwordModal.style.display = 'none';
+                document.body.style.overflow = '';
+                
+                
+                document.getElementById('passwordForm').reset();
+            }
+        }
+
+        function validatePassword(password) {
+            
+            if (password.length < 8) return false;
+            
+            
+            if (!/[A-Z]/.test(password)) return false;
+            
+            
+            if (!/\d/.test(password)) return false;
+            
+            
+            if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) return false;
+            
+            return true;
+        }
+
+        function loadBloggerData() {
+            
+            const bloggerData = localStorage.getItem('bloggerData');
+            
+            if (bloggerData) {
+                try {
+                    const data = JSON.parse(bloggerData);
+                    
+                    
+                    if (data.fullName) {
+                        document.querySelector('input[name="fullName"]').value = data.fullName;
+                    }
+                    if (data.email) {
+                        document.querySelector('input[name="email"]').value = data.email;
+                    }
+                    if (data.phone) {
+                        document.querySelector('input[name="phone"]').value = data.phone;
+                    }
+                    if (data.specialization) {
+                        const specializationSelect = document.querySelector('select[name="specialization"]');
+                        if (specializationSelect) {
+                            specializationSelect.value = data.specialization;
+                        }
+                    }
+                    
+                    
+                    if (data.registrationType) {
+                        const regTypeSelect = document.querySelector('select[name="registrationType"]');
+                        if (regTypeSelect) {
+                            regTypeSelect.value = data.registrationType;
+                        }
+                    }
+                    if (data.inn) {
+                        document.querySelector('input[name="inn"]').value = data.inn;
+                    }
+                    if (data.regDate) {
+                        document.querySelector('input[name="regDate"]').value = data.regDate;
+                    }
+                    
+                    
+                    if (data.vk) {
+                        document.querySelector('input[name="vk"]').value = data.vk;
+                    }
+                    if (data.instagram) {
+                        document.querySelector('input[name="instagram"]').value = data.instagram;
+                    }
+                    if (data.youtube) {
+                        document.querySelector('input[name="youtube"]').value = data.youtube;
+                    }
+                    if (data.telegram) {
+                        document.querySelector('input[name="telegram"]').value = data.telegram;
+                    }
+                    if (data.tiktok) {
+                        document.querySelector('input[name="tiktok"]').value = data.tiktok;
+                    }
+                    if (data.rutube) {
+                        document.querySelector('input[name="rutube"]').value = data.rutube;
+                    }
+                    
+                    
+                    if (data.twoFactorAuth) {
+                        const twoFactorSelect = document.querySelector('select[name="twoFactorAuth"]');
+                        if (twoFactorSelect) {
+                            twoFactorSelect.value = data.twoFactorAuth;
+                        }
+                    }
+                    if (data.loginNotifications) {
+                        const loginNotifSelect = document.querySelector('select[name="loginNotifications"]');
+                        if (loginNotifSelect) {
+                            loginNotifSelect.value = data.loginNotifications;
+                        }
+                    }
+                    if (data.backupEmail) {
+                        document.querySelector('input[name="backupEmail"]').value = data.backupEmail;
+                    }
+                    if (data.backupPhone) {
+                        document.querySelector('input[name="backupPhone"]').value = data.backupPhone;
+                    }
+                    
+                    console.log('Данные блогера загружены:', data);
+                } catch (error) {
+                    console.error('Ошибка при загрузке данных блогера:', error);
+                }
+            } else {
+                console.log('Данные блогера не найдены в localStorage');
+            }
+        }
+
+        function verifySocialNetwork(network) {
+            const input = document.querySelector(`input[name="${network}"]`);
+            const button = input.parentNode.querySelector('.verify-btn');
+            const url = input.value.trim();
+            
+            if (!url) {
+                alert('Сначала введите ссылку на социальную сеть');
+                return;
+            }
+            
+              
+            let isValid = false;
+            switch(network) {
+                case 'vk':
+                    isValid = url.includes('vk.com/');
+                    break;
+                case 'instagram':
+                    isValid = url.includes('instagram.com/');
+                    break;
+                case 'youtube':
+                    isValid = url.includes('youtube.com/') || url.includes('youtu.be/');
+                    break;
+                case 'telegram':
+                    isValid = url.includes('t.me/') || url.includes('telegram.me/');
+                    break;
+                case 'tiktok':
+                    isValid = url.includes('tiktok.com/');
+                    break;
+                case 'rutube':
+                    isValid = url.includes('rutube.ru/');
+                    break;
+            }
+            
+            if (!isValid) {
+                alert('Неверный формат ссылки для ' + network);
+                return;
+            }
+            
+            
+            button.textContent = 'Проверяется...';
+            button.style.background = '#FF9800';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                
+                button.textContent = 'Подтверждено ✓';
+                button.style.background = '#4CAF50';
+                button.style.cursor = 'default';
+                
+                
+                const verifiedNetworks = JSON.parse(localStorage.getItem('verifiedNetworks') || '{}');
+                verifiedNetworks[network] = true;
+                localStorage.setItem('verifiedNetworks', JSON.stringify(verifiedNetworks));
+                
+                console.log(`Социальная сеть ${network} подтверждена`);
+            }, 2000);
+        }
+
+        function loadVerifiedNetworksStatus() {
+            const verifiedNetworks = JSON.parse(localStorage.getItem('verifiedNetworks') || '{}');
+            
+            Object.keys(verifiedNetworks).forEach(network => {
+                if (verifiedNetworks[network]) {
+                    const button = document.querySelector(`input[name="${network}"]`).parentNode.querySelector('.verify-btn');
+                    if (button) {
+                        button.textContent = 'Подтверждено ✓';
+                        button.style.background = '#4CAF50';
+                        button.style.cursor = 'default';
+                        button.disabled = true;
+                    }
+                }
+            });
+        }
+
+        function verifyBackupContact(type) {
+            const input = document.querySelector(`input[name="backup${type.charAt(0).toUpperCase() + type.slice(1)}"]`);
+            const button = input.parentNode.querySelector('.verify-btn');
+            const value = input.value.trim();
+            
+            if (!value) {
+                alert(`Сначала введите резервный ${type === 'email' ? 'email' : 'телефон'}`);
+                return;
+            }
+            
+            
+            let isValid = false;
+            if (type === 'email') {
+                isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+            } else if (type === 'phone') {
+                isValid = /^\+?[0-9\s\-\(\)]{10,}$/.test(value);
+            }
+            
+            if (!isValid) {
+                alert(`Неверный формат ${type === 'email' ? 'email' : 'телефона'}`);
+                return;
+            }
+            
+            
+            button.textContent = 'Проверяется...';
+            button.style.background = '#FF9800';
+            button.disabled = true;
+            
+            setTimeout(() => {
+               
+                button.textContent = 'Подтверждено ✓';
+                button.style.background = '#4CAF50';
+                button.style.cursor = 'default';
+                
+               
+                const verifiedContacts = JSON.parse(localStorage.getItem('verifiedContacts') || '{}');
+                verifiedContacts[type] = true;
+                localStorage.setItem('verifiedContacts', JSON.stringify(verifiedContacts));
+                
+                console.log(`Резервный ${type} подтвержден`);
+            }, 2000);
+        }
+
+        function loadVerifiedContactsStatus() {
+            const verifiedContacts = JSON.parse(localStorage.getItem('verifiedContacts') || '{}');
+            
+            Object.keys(verifiedContacts).forEach(type => {
+                if (verifiedContacts[type]) {
+                    const button = document.querySelector(`input[name="backup${type.charAt(0).toUpperCase() + type.slice(1)}"]`).parentNode.querySelector('.verify-btn');
+                    if (button) {
+                        button.textContent = 'Подтверждено ✓';
+                        button.style.background = '#4CAF50';
+                        button.style.cursor = 'default';
+                        button.disabled = true;
+                    }
+                }
+            });
+        }
+
+       
+        document.querySelectorAll('.toggle-switch input').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                console.log('Переключатель изменен:', this.checked);
+                
+                
+                if (this.id === 'tooltipsToggle') {
+                    localStorage.setItem('showTooltips', this.checked);
+                    
+                    applyTooltipsSetting();
+                }
+            });
+        });
+        
+         
+        function loadTooltipsSetting() {
+            const tooltipsToggle = document.getElementById('tooltipsToggle');
+            if (tooltipsToggle) {
+                const showTooltips = localStorage.getItem('showTooltips');
+                if (showTooltips !== null) {
+                    tooltipsToggle.checked = showTooltips === 'true';
+                }
+            }
+        }
+        
+
+
+        
+        document.querySelectorAll('input, select, textarea').forEach(field => {
+            field.addEventListener('change', function() {
+                console.log('Поле изменено:', this.name, this.value);
+            });
+        });
+        
+        
+        const bloggerProfileBlock = document.querySelector('.blogger-profile-block');
+        if (bloggerProfileBlock) {
+            bloggerProfileBlock.onclick = function() {
+                window.location.href = 'blogger_dashboard.html';
+            };
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+          
+          document.body.style.backgroundColor = 'rgb(248, 245, 240)';
+          
+          
+          loadBloggerData();
+          
+          
+          loadVerifiedNetworksStatus();
+          
+          
+          loadVerifiedContactsStatus();
+          
+                  
+        loadTooltipsSetting();
+          
+          
+          
+          
+          const passwordForm = document.getElementById('passwordForm');
+          if (passwordForm) {
+            passwordForm.addEventListener('submit', function(e) {
+              e.preventDefault();
+              
+              const formData = new FormData(passwordForm);
+              const currentPassword = formData.get('currentPassword');
+              const newPassword = formData.get('newPassword');
+              const confirmPassword = formData.get('confirmPassword');
+              
+              
+              if (newPassword !== confirmPassword) {
+                alert('Новые пароли не совпадают!');
+                return;
+              }
+              
+              
+              if (!validatePassword(newPassword)) {
+                alert('Пароль не соответствует требованиям безопасности!');
+                return;
+              }
+              
+              
+              console.log('Смена пароля...', { currentPassword, newPassword });
+              alert('Пароль успешно изменен!');
+              
+              
+              closePasswordModal();
+            });
+          }
+          
+          
+          const modal = document.getElementById('modal');
+          const modalOverlay = document.getElementById('modalOverlay');
+          
+          function openModal(contentHtml) {
+            modal.innerHTML = contentHtml;
+            modal.style.display = 'block';
+            modalOverlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            modal.querySelector('.modal-close').onclick = closeModal;
+          }
+          
+          function closeModal() {
+            modal.style.display = 'none';
+            modalOverlay.style.display = 'none';
+            document.body.style.overflow = '';
+          }
+          
+            
+          if (modalOverlay) {
+            modalOverlay.onclick = function(e) {
+                
+              const modal = document.getElementById('modal');
+              if (modal && modal.style.display === 'block') {
+                closeModal();
+              }
+            };
+          }
+          
+          function initializeTopupModal() {
+            let currentAmount = 10000;
+            let isIndividual = true;
+            
+            const amountDisplay = document.getElementById('amountDisplay');
+            const topupAmount = document.getElementById('topupAmount');
+            const minusBtn = document.getElementById('minusBtn');
+            const plusBtn = document.getElementById('plusBtn');
+            const individualBtn = document.getElementById('individualBtn');
+            const legalBtn = document.getElementById('legalBtn');
+            const payerName = document.getElementById('payerName');
+            const topupActionBtn = document.getElementById('topupActionBtn');
+            
+            function updateAmount() {
+              const formattedAmount = currentAmount.toLocaleString('ru-RU') + ' p';
+              amountDisplay.textContent = formattedAmount;
+              topupAmount.textContent = formattedAmount;
+            }
+            
+            function updateEntityType() {
+              if (isIndividual) {
+                individualBtn.classList.add('active');
+                legalBtn.classList.remove('active');
+                payerName.textContent = 'Иванов Иван Иванович';
+              } else {
+                legalBtn.classList.add('active');
+                individualBtn.classList.remove('active');
+                payerName.textContent = 'По счету';
+              }
+            }
+            
+                
+            minusBtn.onclick = function() {
+              if (currentAmount > 1000) {
+                currentAmount -= 1000;
+                updateAmount();
+              }
+            };
+            
+            plusBtn.onclick = function() {
+              currentAmount += 1000;
+              updateAmount();
+            };
+            
+                
+            individualBtn.onclick = function() {
+              isIndividual = true;
+              updateEntityType();
+            };
+            
+            legalBtn.onclick = function() {
+              isIndividual = false;
+              updateEntityType();
+            };
+            
+                
+            topupActionBtn.onclick = function() {
+                
+              alert(`Баланс пополнен на ${currentAmount.toLocaleString('ru-RU')} рублей (заглушка)`);
+              closeModal();
+            };
+            
+                
+            updateAmount();
+            updateEntityType();
+          }
+          
+                
+          function showMarketStub() {
+            openModal(`
+              <div class="market-stub-modal">
+                <button class="modal-close">&times;</button>
+                <div class="market-stub-content">
+                  <div class="market-stub-icon">🛒</div>
+                  <h2>Маркет</h2>
+                  <p>Маркет пока в разработке! Скоро здесь появится возможность покупать товары и услуги.</p>
+                </div>
+              </div>
+            `);
+          }
+          
+                    
+        document.querySelectorAll('.sidebar-buttons button, .sidebar-market button').forEach(btn => {
+          btn.onclick = function() {
+                
+            document.querySelectorAll('.sidebar-buttons button').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.sidebar-market button').forEach(b => b.classList.remove('active'));
+                
+            this.classList.add('active');
+            
+                
+            const action = this.dataset.action;
+            if (action === 'stats') {
+              window.location.href = 'blogger_stats.html';
+            } else if (action === 'partners') {
+              window.location.href = 'blogger_partners.html';
+            } else if (action === 'notifications') {
+              window.location.href = 'blogger_notifications.html';
+            } else if (action === 'contracts') {
+              window.location.href = 'blogger_contracts.html';
+            } else if (action === 'settings') {
+              window.location.href = 'blogger_settings.html';
+            } else if (action === 'market') {
+                  
+              openModal(`
+                <div class="market-stub-modal">
+                  <button class="modal-close">&times;</button>
+                  <div class="market-stub-content">
+                    <div class="market-stub-icon">🛒</div>
+                    <h2>Маркет</h2>
+                    <p>Маркет пока в разработке! Скоро здесь появится возможность покупать товары и услуги.</p>
+                  </div>
+                </div>
+              `);
+            }
+          };
+        });
+          
+            
+          var topupBtn = document.getElementById('topupBtn');
+          if (topupBtn) {
+            topupBtn.onclick = function() {
+              openModal(`
+                <div class="topup-modal">
+                  <button class="modal-close">&times;</button>
+                  <div class="topup-modal-header">
+                    <h2>Пополнение баланса</h2>
+                  </div>
+                  <div class="topup-modal-content">
+                    <div class="topup-left-section">
+                      <div class="amount-controls">
+                        <button class="amount-btn minus-btn" id="minusBtn">-</button>
+                        <div class="amount-display" id="amountDisplay">10 000 p</div>
+                        <button class="amount-btn plus-btn" id="plusBtn">+</button>
+                      </div>
+                      
+                      <div class="entity-type-selection">
+                        <button class="entity-btn individual-btn active" id="individualBtn">Физ.лицо</button>
+                        <button class="entity-btn legal-btn" id="legalBtn">Юр.лицо</button>
+                      </div>
+                      
+                      <div class="payment-method-section">
+                        <label class="section-label">Способ оплаты</label>
+                        <button class="dropdown-btn" id="paymentMethodBtn">
+                          <span>Банковская карта</span>
+                          <span class="chevron">▼</span>
+                        </button>
+                      </div>
+                      
+                      <div class="payer-section">
+                        <label class="section-label">Плательщик</label>
+                        <button class="dropdown-btn" id="payerBtn">
+                          <span id="payerName">Иванов Иван Иванович</span>
+                          <span class="chevron">▼</span>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div class="topup-right-section">
+                      <button class="topup-action-btn" id="topupActionBtn">
+                        <span>Пополнить</span>
+                        <span>счет</span>
+                        <span id="topupAmount">10 000 p</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              `);
+              
+              
+              initializeTopupModal();
+            };
+          }
+          
+          document.addEventListener('DOMContentLoaded', function() {
+           
+            const currentPage = window.location.pathname.split('/').pop();
+            
+           
+            if (currentPage === 'blogger_settings.html') {
+              document.querySelector('[data-action="settings"]').classList.add('active');
+            }
+          });
+
+          
+          const bloggerProfileBlock = document.querySelector('.blogger-profile-block');
+          if (bloggerProfileBlock) {
+            bloggerProfileBlock.onclick = function() {
+              window.location.href = 'blogger_profile.html';
+            };
+          }
+        });
+    </script>
+      <script src="js/modal.js"></script>
+    <script src="js/tooltips.js"></script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация блогера</title>
+    <link rel="icon" type="image/png" href="assets/Group 2087325579.png">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Gotham Pro', 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1d24 0%, #2c2f33 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .registration-container {
+            background: linear-gradient(135deg, #23252b 0%, #2c2f33 100%);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border: 1px solid #36393f;
+            text-align: center;
+            max-width: 480px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .registration-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff8c8c 0%, #ff6c6c 100%);
+        }
+
+        .logo-section {
+            margin-bottom: 32px;
+        }
+
+        .brand-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 24px;
+            filter: drop-shadow(0 4px 12px rgba(255, 140, 140, 0.3));
+        }
+
+        .welcome-title {
+            color: #ffffff;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-subtitle {
+            color: #a0a0a0;
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        .role-selection {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .role-btn {
+            background: linear-gradient(135deg, #36393f 0%, #2c2f33 100%);
+            border: 2px solid #444652;
+            border-radius: 16px;
+            padding: 20px 24px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .role-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 140, 140, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .role-btn:hover {
+            border-color: #ff8c8c;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 140, 140, 0.3);
+        }
+
+        .role-btn:hover::before {
+            left: 100%;
+        }
+
+        .role-btn:active {
+            transform: translateY(0);
+        }
+
+       
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #23252b 0%, #2c2f33 100%);
+            border-radius: 24px;
+            padding: 0;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+            border: 1px solid #36393f;
+            z-index: 1001;
+            display: none;
+            max-width: 480px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            padding: 32px;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #36393f;
+        }
+
+        .modal-title {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .modal-subtitle {
+            color: #a0a0a0;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #36393f 0%, #2c2f33 100%);
+            border: 2px solid #444652;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #ff8c8c;
+            box-shadow: 0 0 0 3px rgba(255, 140, 140, 0.2);
+        }
+
+        .form-input::placeholder {
+            color: #808080;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff8c8c 0%, #ff6c6c 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 16px 24px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 16px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 140, 140, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #a0a0a0;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: #ffffff;
+            background: rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 480px) {
+            .registration-container {
+                margin: 20px;
+                padding: 32px 24px;
+            }
+            
+            .brand-logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .welcome-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-container">
+        <div class="logo-section">
+            <img src="assets/Group 2087325579.png" alt="Логотип компании" class="brand-logo">
+            <h1 class="welcome-title">Регистрация блогера</h1>
+            <p class="welcome-subtitle">Создайте аккаунт для работы с брендами</p>
+        </div>
+        
+        <div class="role-selection">
+            <button class="role-btn" onclick="window.location.href='registration.html'">Бренд</button>
+            <button class="role-btn" id="bloggerBtn">Блогер</button>
+        </div>
+    </div>
+
+    
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal" id="bloggerModal">
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Регистрация блогера</h2>
+                <p class="modal-subtitle">Заполните данные для создания аккаунта</p>
+            </div>
+            
+            <form id="bloggerForm">
+                <div class="form-group">
+                    <label class="form-label">Контактный email</label>
+                    <input type="email" name="email" class="form-input" placeholder="blogger@example.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Имя и фамилия</label>
+                    <input type="text" name="name" class="form-input" placeholder="Иван Иванов" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Дата рождения</label>
+                    <input type="date" name="birthdate" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Номер телефона</label>
+                    <input type="tel" name="phone" class="form-input" placeholder="+7 (999) 123-45-67" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Ссылки на соцсети</label>
+                    <input type="url" name="vk" class="form-input" placeholder="https://vk.com/username" style="margin-bottom: 8px;">
+                    <input type="url" name="youtube" class="form-input" placeholder="https://youtube.com/@channel" style="margin-bottom: 8px;">
+                    <input type="url" name="telegram" class="form-input" placeholder="https://t.me/username">
+                </div>
+                
+                <button type="submit" class="submit-btn">Создать аккаунт</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const bloggerBtn = document.getElementById('bloggerBtn');
+        const modal = document.getElementById('bloggerModal');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const bloggerForm = document.getElementById('bloggerForm');
+
+       
+        bloggerBtn.onclick = function() {
+            modal.style.display = 'block';
+            modalOverlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        };
+
+        
+        function closeModal() {
+            modal.style.display = 'none';
+            modalOverlay.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        modalOverlay.onclick = closeModal;
+
+       
+        bloggerForm.onsubmit = function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(bloggerForm);
+            const data = {
+                email: formData.get('email'),
+                name: formData.get('name'),
+                birthdate: formData.get('birthdate'),
+                phone: formData.get('phone'),
+                vk: formData.get('vk'),
+                youtube: formData.get('youtube'),
+                telegram: formData.get('telegram')
+            };
+            
+            
+            localStorage.setItem('bloggerData', JSON.stringify(data));
+            
+            
+            showSuccessMessage();
+            
+            
+            setTimeout(() => {
+                window.location.href = 'blogger_dashboard.html';
+            }, 1500);
+        };
+
+        
+        const roleButtons = document.querySelectorAll('.role-btn');
+        roleButtons.forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    });
+
+   
+    function showSuccessMessage() {
+        const modal = document.getElementById('bloggerModal');
+        if (modal) {
+            modal.innerHTML = `
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" style="color: #4CAF50;">✓ Регистрация успешна!</h2>
+                        <p class="modal-subtitle">Ваш аккаунт создан. Перенаправляем на дашборд...</p>
+                    </div>
+                    <div style="text-align: center; padding: 32px;">
+                        <div style="width: 60px; height: 60px; border: 4px solid #4CAF50; border-top: 4px solid transparent; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 24px;"></div>
+                        <p style="color: #a0a0a0; font-size: 14px;">Подготовка дашборда...</p>
+                    </div>
+                </div>
+            `;
+            
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('bloggerModal');
+        const modalOverlay = document.getElementById('modalOverlay');
+        if (modal) modal.style.display = 'none';
+        if (modalOverlay) modalOverlay.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+    </script>
+    <script src="js/modal.js"></script>
+</body>
+</html> 
